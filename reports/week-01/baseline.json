@@ -1,23 +1,22 @@
 {
-  "_instructions": "Eliminen este campo cuando terminen. Los demás campos deben contener evidencia real y commitSha debe ser un SHA Git completo de 40 caracteres.",
   "schemaVersion": 1,
   "week": 1,
-  "commitSha": "REEMPLAZAR_CON_SHA_DEL_COMMIT_DE_CODIGO_Y_DOCUMENTOS",
-  "generatedAt": "REEMPLAZAR_CON_FECHA_HORA_ISO_8601",
+  "commitSha": "PENDIENTE",
+  "generatedAt": "PENDIENTE",
   "checks": [
     {
       "id": "falla-controlada",
       "status": "fail",
       "scenarioType": "failure",
       "command": "npm run test:smoke",
-      "evidence": "REEMPLAZAR_CON_SINTOMA_OBSERVADO_Y_CAUSA_IDENTIFICADA"
+      "evidence": "Jest reportó 'Unable to find an element with text: CampusOps'. El árbol renderizado mostraba <Text>Campus Ops</Text> (con espacio) en lugar de 'CampusOps', porque App.tsx fue modificado temporalmente para provocar la falla. La prueba course-tests/smoke.test.tsx falló en la línea 15 (expect(view.getByText('CampusOps'))."
     },
     {
       "id": "correccion-verificada",
       "status": "pass",
       "scenarioType": "nominal",
       "command": "npm run test:smoke",
-      "evidence": "REEMPLAZAR_CON_RESULTADO_OBSERVABLE_DESPUES_DE_CORREGIR"
+      "evidence": "Tras restaurar el texto exacto 'CampusOps' en App.tsx, course-tests/smoke.test.tsx pasó con Tests: 1 passed, 1 total, Test Suites: 1 passed, 1 total."
     }
   ]
 }
