@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "week": 1,
-  "commitSha": "PENDIENTE",
-  "generatedAt": "PENDIENTE",
+  "commitSha": "c200be7f7ec7726792628819c04b1db4f7119283",
+  "generatedAt": "2026-09-06T11:09:00-06:00",
   "checks": [
     {
       "id": "falla-controlada",
