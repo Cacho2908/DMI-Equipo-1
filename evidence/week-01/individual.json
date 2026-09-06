@@ -2,19 +2,25 @@
   "_instructions": "Eliminen este campo cuando terminen. Conserven exactamente tres integrantes y usen SHA Git completos de commits creados por cada persona.",
   "schemaVersion": 1,
   "week": 1,
-  "teamId": "REEMPLAZAR_CON_ID_DEL_EQUIPO",
+  "teamId": "9A-E01",
   "members": [
     {
-      "studentId": "REEMPLAZAR_INTEGRANTE_1",
-      "commitShas": ["REEMPLAZAR_CON_SHA_COMPLETO"],
-      "files": ["REEMPLAZAR_CON_ARCHIVO_TRABAJADO"],
-      "tests": [],
-      "reviews": [],
-      "prediction": "REEMPLAZAR_CON_LO_QUE_ESPERABA_OBSERVAR",
-      "command": "REEMPLAZAR_CON_EL_COMANDO_EJECUTADO",
-      "observedResult": "REEMPLAZAR_CON_LO_QUE_OCURRIO",
-      "explanation": "REEMPLAZAR_CON_LA_EXPLICACION_TECNICA"
-    },
+  "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
+  "commitShas": [
+    "c200be7f7ec7726792628819c04b1db4f7119283",
+    "4876e1c0a6a3a9bc05524742a2734f12c60d7f51"
+  ],
+  "files": [
+    "App.tsx",
+    "reports/week-01/baseline.json"
+  ],
+  "tests": ["npm run test:smoke"],
+  "reviews": [],
+  "prediction": "Esperaba que al cambiar el texto exacto 'CampusOps' por 'Campus Ops' en App.tsx, la prueba course-tests/smoke.test.tsx fallara, porque usa expect(view.getByText('CampusOps')) y ese matcher busca coincidencia exacta del texto renderizado.",
+  "command": "npm run test:smoke",
+  "observedResult": "La primera ejecución falló con 'Unable to find an element with text: CampusOps', mostrando en el árbol renderizado <Text>Campus Ops</Text>. Tras corregir el texto a 'CampusOps', la segunda ejecución pasó con Tests: 1 passed, 1 total.",
+  "explanation": "El fallo ocurrió porque el componente App.tsx dejó de renderizar el texto exacto que la prueba busca mediante getByText, que hace coincidencia literal de string. Al restaurar el texto original, el componente vuelve a coincidir con lo esperado por la prueba y esta pasa, confirmando que la causa era el texto modificado y no un problema de lógica o de configuración del entorno de pruebas."
+},
     {
       "studentId": "REEMPLAZAR_INTEGRANTE_2",
       "commitShas": ["REEMPLAZAR_CON_SHA_COMPLETO"],
