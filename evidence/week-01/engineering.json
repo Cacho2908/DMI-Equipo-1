@@ -1,20 +1,19 @@
 {
-  "_instructions": "Eliminen este campo cuando terminen. Comparen alternativas reales y relacionen la decisión con una comprobación ejecutada.",
   "schemaVersion": 1,
   "week": 1,
-  "commitSha": "REEMPLAZAR_CON_SHA_DEL_COMMIT_DE_CODIGO_Y_DOCUMENTOS",
-  "decision": "REEMPLAZAR_CON_LA_DECISION_DE_ALCANCE_RIESGO_O_ACEPTACION",
+  "commitSha": "PENDIENTE",
+  "decision": "Adoptar un modelo estricto de estados (PENDIENTE, ASIGNADO, EN_PROCESO, RESUELTO) respaldado por pruebas de humo (smoke tests) para garantizar la consistencia en CampusOps.",
   "alternatives": [
-    "REEMPLAZAR_CON_PRIMERA_ALTERNATIVA_REAL",
-    "REEMPLAZAR_CON_SEGUNDA_ALTERNATIVA_REAL"
+    "Permitir transiciones libres de estado en la interfaz sin validación previa en pruebas de integración.",
+    "Validar los flujos del sistema únicamente mediante verificaciones manuales sin ejecuciones en CI."
   ],
-  "tradeoff": "REEMPLAZAR_CON_EL_BENEFICIO_Y_EL_COSTO_DE_LA_DECISION",
+  "tradeoff": "Beneficio: garantiza la estabilidad del flujo principal y detecta regresiones inmediatamente. Costo: requiere mantener las pruebas alineadas al código y ejecutarlas en cada cambio.",
   "requirementIds": ["AC-02", "AC-04"],
   "verification": [
     {
-      "command": "REEMPLAZAR_CON_COMANDO_EJECUTADO",
-      "result": "REEMPLAZAR_CON_RESULTADO_OBSERVADO",
-      "evidence": "REEMPLAZAR_CON_ARCHIVO_REPORTE_O_SALIDA_QUE_LO_DEMUESTRA"
+      "command": "npm run test:smoke",
+      "result": "PASS course-tests/smoke.test.tsx (1 passed, 1 total)",
+      "evidence": "reports/week-01/baseline.json"
     }
   ]
 }
