@@ -22,16 +22,19 @@
   "explanation": "El fallo ocurrió porque el componente App.tsx dejó de renderizar el texto exacto que la prueba busca mediante getByText, que hace coincidencia literal de string. Al restaurar el texto original, el componente vuelve a coincidir con lo esperado por la prueba y esta pasa, confirmando que la causa era el texto modificado y no un problema de lógica o de configuración del entorno de pruebas."
 },
     {
-      "studentId": "REEMPLAZAR_INTEGRANTE_2",
-      "commitShas": ["REEMPLAZAR_CON_SHA_COMPLETO"],
-      "files": ["REEMPLAZAR_CON_ARCHIVO_TRABAJADO"],
-      "tests": [],
-      "reviews": [],
-      "prediction": "REEMPLAZAR_CON_LO_QUE_ESPERABA_OBSERVAR",
-      "command": "REEMPLAZAR_CON_EL_COMANDO_EJECUTADO",
-      "observedResult": "REEMPLAZAR_CON_LO_QUE_OCURRIO",
-      "explanation": "REEMPLAZAR_CON_LA_EXPLICACION_TECNICA"
-    },
+  "name": "3523110714 Fatima Avelino Celis",
+  "commitShas": [
+    "be56b1c08024cf80ee5b92dbaf23f31d4a1f8844"
+  ],
+  "files": [
+    "docs/problem-definition.md",
+    "docs/risk-register.md"
+  ],
+  "prediction": "Al definir formalmente el alcance, los roles y la matriz de riesgos, la arquitectura y los criterios de aceptación quedan alineados con el flujo de estados de CampusOps.",
+  "command": "cat docs/problem-definition.md docs/risk-register.md",
+  "observedResult": "Documentos completos con alcance, 4 estados de flujo, 3 criterios de aceptación verificables y 3 riesgos priorizados con mitigar y comprobar.",
+  "explanation": "Definí la visión funcional de CampusOps y formalicé la matriz de mitigación de riesgos para evitar inconsistencias en las pruebas e integración del equipo."
+},
     {
       "studentId": "REEMPLAZAR_INTEGRANTE_3",
       "commitShas": ["REEMPLAZAR_CON_SHA_COMPLETO"],
