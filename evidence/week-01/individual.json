@@ -1,50 +1,55 @@
 {
-  "_instructions": "Eliminen este campo cuando terminen. Conserven exactamente tres integrantes y usen SHA Git completos de commits creados por cada persona.",
   "schemaVersion": 1,
   "week": 1,
-  "teamId": "9A-E01",
+  "teamId": "10A-E01",
   "members": [
     {
-  "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
-  "commitShas": [
-    "c200be7f7ec7726792628819c04b1db4f7119283",
-    "4876e1c0a6a3a9bc05524742a2734f12c60d7f51"
-  ],
-  "files": [
-    "App.tsx",
-    "reports/week-01/baseline.json"
-  ],
-  "tests": ["npm run test:smoke"],
-  "reviews": [],
-  "prediction": "Esperaba que al cambiar el texto exacto 'CampusOps' por 'Campus Ops' en App.tsx, la prueba course-tests/smoke.test.tsx fallara, porque usa expect(view.getByText('CampusOps')) y ese matcher busca coincidencia exacta del texto renderizado.",
-  "command": "npm run test:smoke",
-  "observedResult": "La primera ejecución falló con 'Unable to find an element with text: CampusOps', mostrando en el árbol renderizado <Text>Campus Ops</Text>. Tras corregir el texto a 'CampusOps', la segunda ejecución pasó con Tests: 1 passed, 1 total.",
-  "explanation": "El fallo ocurrió porque el componente App.tsx dejó de renderizar el texto exacto que la prueba busca mediante getByText, que hace coincidencia literal de string. Al restaurar el texto original, el componente vuelve a coincidir con lo esperado por la prueba y esta pasa, confirmando que la causa era el texto modificado y no un problema de lógica o de configuración del entorno de pruebas."
-},
+      "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
+      "commitShas": [
+        "c200be7f7ec7726792628819c04b1db4f7119283",
+        "4876e1c0a6a3a9bc05524742a2734f12c60d7f51"
+      ],
+      "files": [
+        "App.tsx",
+        "reports/week-01/baseline.json"
+      ],
+      "tests": ["npm run test:smoke"],
+      "reviews": [],
+      "prediction": "Esperaba que al cambiar el texto exacto 'CampusOps' por 'Campus Ops' en App.tsx, la prueba course-tests/smoke.test.tsx fallara, porque usa expect(view.getByText('CampusOps')) y ese matcher busca coincidencia exacta del texto renderizado.",
+      "command": "npm run test:smoke",
+      "observedResult": "La primera ejecución falló con 'Unable to find an element with text: CampusOps', mostrando en el árbol renderizado <Text>Campus Ops</Text>. Tras corregir el texto a 'CampusOps', la segunda ejecución pasó con Tests: 1 passed, 1 total.",
+      "explanation": "El fallo ocurrió porque el componente App.tsx dejó de renderizar el texto exacto que la prueba busca mediante getByText, que hace coincidencia literal de string. Al restaurar el texto original, el componente vuelve a coincidir con lo esperado por la prueba y esta pasa, confirmando que la causa era el texto modificado y no un problema de lógica o de configuración del entorno de pruebas."
+    },
     {
-  "name": "3523110714 Fatima Avelino Celis",
-  "commitShas": [
-    "be56b1c08024cf80ee5b92dbaf23f31d4a1f8844"
-  ],
-  "files": [
-    "docs/problem-definition.md",
-    "docs/risk-register.md"
-  ],
-  "prediction": "Al definir formalmente el alcance, los roles y la matriz de riesgos, la arquitectura y los criterios de aceptación quedan alineados con el flujo de estados de CampusOps.",
-  "command": "cat docs/problem-definition.md docs/risk-register.md",
-  "observedResult": "Documentos completos con alcance, 4 estados de flujo, 3 criterios de aceptación verificables y 3 riesgos priorizados con mitigar y comprobar.",
-  "explanation": "Definí la visión funcional de CampusOps y formalicé la matriz de mitigación de riesgos para evitar inconsistencias en las pruebas e integración del equipo."
-},
-    {
-      "studentId": "REEMPLAZAR_INTEGRANTE_3",
-      "commitShas": ["REEMPLAZAR_CON_SHA_COMPLETO"],
-      "files": ["REEMPLAZAR_CON_ARCHIVO_TRABAJADO"],
+      "studentId": "3523110714 Fatima Avelino Celis",
+      "commitShas": [
+        "be56b1c08024cf80ee5b92dbaf23f31d4a1f8844"
+      ],
+      "files": [
+        "docs/problem-definition.md",
+        "docs/risk-register.md"
+      ],
       "tests": [],
       "reviews": [],
-      "prediction": "REEMPLAZAR_CON_LO_QUE_ESPERABA_OBSERVAR",
-      "command": "REEMPLAZAR_CON_EL_COMANDO_EJECUTADO",
-      "observedResult": "REEMPLAZAR_CON_LO_QUE_OCURRIO",
-      "explanation": "REEMPLAZAR_CON_LA_EXPLICACION_TECNICA"
+      "prediction": "Al definir formalmente el alcance, los roles y la matriz de riesgos, la arquitectura y los criterios de aceptación quedan alineados con el flujo de estados de CampusOps.",
+      "command": "cat docs/problem-definition.md docs/risk-register.md",
+      "observedResult": "Documentos completos con alcance, 4 estados de flujo, 3 criterios de aceptación verificables y 3 riesgos priorizados con mitigar y comprobar.",
+      "explanation": "Definí la visión funcional de CampusOps y formalicé la matriz de mitigación de riesgos para evitar inconsistencias en las pruebas e integración del equipo."
+    },
+    {
+      "studentId": "3523110081 Janeth Cabrera Arguelles",
+      "commitShas": [
+        "0b93b0f84d7652783a97b789fcde5243898b28b8"
+      ],
+      "files": [
+        "evidence/week-01/engineering.json"
+      ],
+      "tests": ["npm run test:smoke"],
+      "reviews": [],
+      "prediction": "Al ejecutar npm run test:smoke de forma independiente tras la corrección de Héctor, la prueba debe ejecutarse correctamente en mi entorno local y confirmar que la regresión fue resuelta.",
+      "command": "npm run test:smoke",
+      "observedResult": "PASS course-tests/smoke.test.tsx - renders the reproducible baseline and resolves backend state (130 ms). Tests: 1 passed, 1 total.",
+      "explanation": "Verifiqué de manera independiente en mi máquina local que los tests pasan tras la corrección en App.tsx y documenté la decisión de ingeniería con sus alternativas, trade-offs y comandos de comprobación."
     }
   ]
 }
