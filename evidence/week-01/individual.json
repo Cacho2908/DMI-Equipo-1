@@ -30,7 +30,8 @@
         "docs/risk-register.md"
       ],
       "tests": [],
-      "reviews": [],
+      "reviews": [  "Revisé que los criterios de aceptación en problem-definition.md fueran consistentes con el flujo de estados descrito en docs/CAMPUSOPS.md"
+],
       "prediction": "Al definir formalmente el alcance, los roles y la matriz de riesgos, la arquitectura y los criterios de aceptación quedan alineados con el flujo de estados de CampusOps.",
       "command": "cat docs/problem-definition.md docs/risk-register.md",
       "observedResult": "Documentos completos con alcance, 4 estados de flujo, 3 criterios de aceptación verificables y 3 riesgos priorizados con mitigar y comprobar.",
