@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 1,
-  "commitSha": "0b93b0f84d7652783a97b789fcde5243898b28b8",
+  "commitSha": "1a150e0711d716057434724b4a2687686fc32aed",
   "decision": "Adoptar un modelo estricto de estados (PENDIENTE, ASIGNADO, EN_PROCESO, RESUELTO) respaldado por pruebas de humo (smoke tests) para garantizar la consistencia en CampusOps.",
   "alternatives": [
     "Permitir transiciones libres de estado en la interfaz sin validación previa en pruebas de integración.",
