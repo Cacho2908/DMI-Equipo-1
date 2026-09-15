@@ -1,9 +1,29 @@
 {
   "schemaVersion": 1,
-  "week": 1,
+  "week": 2,
   "teamId": "10A-E01",
   "members": [
-    
+    {
+  "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
+  "commitShas": ["8f041f2bf55a5006b65dd849f70901cade544a16"],
+  "files": [
+    "src/domain/incident.ts",
+    "src/application/listIncidents.ts",
+    "src/application/getIncidentDetail.ts",
+    "src/infrastructure/incidents/fakeIncidentRepository.ts",
+    "src/ui/screens/IncidentListScreen.tsx",
+    "src/ui/screens/IncidentDetailScreen.tsx",
+    "App.tsx"
+  ],
+  "tests": ["npm run test:smoke"],
+  "reviews": [
+      "Revisé que el diagrama de arquitectura (docs/architecture.mmd) y el ADR-001 coincidieran con las carpetas y límites realmente implementados en src/domain, src/application, src/infrastructure y src/ui, y que ningún archivo de src/ui importara directamente de src/infrastructure."
+  ],
+  "prediction": "Esperaba que al implementar la lista de incidencias con FlatList, course-tests/smoke.test.tsx siguiera pasando sin cambios, ya que FlatList es un componente estándar de React Native.",
+  "command": "npm run test:smoke",
+  "observedResult": "La primera ejecución con FlatList colgó el test con 'Exceeded timeout of 5000 ms for a test', porque los mecanismos internos de virtualización de FlatList (temporizadores/requestAnimationFrame) no se resuelven en el entorno de Jest. Al reemplazar FlatList por un ScrollView con .map(), la prueba volvió a pasar en 420ms (Tests: 1 passed, 1 total).",
+  "explanation": "El problema no era de lógica de negocio ni de las capas de dominio/aplicación, sino de un componente de UI (FlatList) incompatible con el entorno de pruebas configurado en el proyecto. Sustituirlo por un ScrollView con .map() resolvió la causa raíz sin afectar el contrato de las demás capas, ya que IncidentListScreen sigue recibiendo los datos por props sin conocer infraestructura."
+}, 
     {
       "studentId": "3523110714 Fatima Avelino Celis",
       "commitShas": [

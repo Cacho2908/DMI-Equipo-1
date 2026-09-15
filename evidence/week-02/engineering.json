@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 2,
-  "commitSha": "531d936391a3ebb99962f8b2dab62bf37461ca15",
+  "commitSha": "954ffac158a509f7c1f9d1861fe8b5bf87c9a15d",
   "decision": "Separar la aplicación en 4 capas (UI, application, domain, infrastructure) con inversión de dependencias, en vez de organizar todo por feature con acceso directo a infraestructura desde las pantallas.",
   "alternatives": [
     "Arquitectura modular por features con acceso directo a infraestructura",
