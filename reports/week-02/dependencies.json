@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "week": 2,
+  "commitSha": "531d936391a3ebb99962f8b2dab62bf37461ca15",
+  "generatedAt": "2026-09-14T20:12:57Z",
+  "checks": [
+    {
+      "id": "dependencia-prohibida-detectada",
+      "status": "fail",
+      "scenarioType": "failure",
+      "command": "Get-ChildItem -Path src\\ui -Recurse -File -Include *.tsx,*.ts | Select-String -Pattern \"from '.*infrastructure\"",
+      "evidence": "El comando encontró un import directo de '../../infrastructure/incidents/fakeIncidentRepository' dentro de src/ui/screens/IncidentListScreen.tsx:4, violando el límite definido en ADR-001 (la UI no debe conocer infraestructura)."
+    },
+    {
+      "id": "dependencia-corregida",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "Get-ChildItem -Path src\\ui -Recurse -File -Include *.tsx,*.ts | Select-String -Pattern \"from '.*infrastructure\"",
+      "evidence": "Tras quitar el import directo, el comando ya no encontró coincidencias en src/ui. La UI sigue recibiendo los datos de incidencias únicamente por props."
+    }
+  ]
+}

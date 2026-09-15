@@ -6,6 +6,7 @@ type Props = {
   onSelect: (id: string) => void;
 };
 
+
 export function IncidentListScreen({ incidents, onSelect }: Props) {
   return (
     <ScrollView>

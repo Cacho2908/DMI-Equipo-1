@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "week": 1,
+  "teamId": "10A-E01",
+  "members": [
+    
+    {
+      "studentId": "3523110714 Fatima Avelino Celis",
+      "commitShas": [
+        "531d936391a3ebb99962f8b2dab62bf37461ca15"
+        
+      ],
+      "files": [
+        "reports/week-02/dependencies.json",
+        "evidence/week-02/engineering.json"
+      ],
+      "tests": [
+        "npm run test:smoke"
+      ],
+      "reviews": [
+        "Verifiqué mediante comandos estáticos que la UI no tuviera dependencias prohibidas hacia la capa de infraestructura (AC-03)."
+      ],
+      "prediction": "Al aislar la UI y aplicar inversión de dependencias conforme al ADR, se cumple con la regla de separación de capas y se evitan acoplamientos rígidos.",
+      "command": "Get-ChildItem -Path src\\ui -Recurse -File -Include *.tsx,*.ts | Select-String -Pattern \"from '.*infrastructure\"",
+      "observedResult": "Se detectó y documentó la violación intencional (fail) y posteriormente se confirmó la ausencia de imports directos tras la corrección (pass).",
+      "explanation": "Comprobé el cumplimiento de la restricción de dependencias de la UI y justifiqué la decisión de ingeniería de la arquitectura por capas."
+    }
+  ]
+}
