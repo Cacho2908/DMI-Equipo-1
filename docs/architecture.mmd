@@ -1,0 +1,9 @@
+flowchart TD
+  UI["UI: IncidentListScreen, IncidentDetailScreen"]
+  APP["Application: listIncidents, getIncidentDetail"]
+  DOM["Domain: Incident, IncidentRepository (contrato)"]
+  INFRA["Infrastructure: fakeIncidentRepository, courseBackend"]
+ 
+  UI --> APP
+  APP --> DOM
+  INFRA -->|implementa| DOM
