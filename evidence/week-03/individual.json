@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "week": 2,
+  "teamId": "10A-E01",
+  "members": [
+    
+    {
+  "studentId": "3523110714 Fatima Avelino Celis",
+  "commitShas": [
+    "17ae2421984320790be0cea08de8d34564393a39"
+  ],
+  "files": [
+    "docs/threat-model.md"
+  ],
+  "tests": [],
+  "reviews": [
+    "Analicé y documenté el modelo de amenazas inicial para CampusOps, estableciendo los activos a proteger, las fronteras de confianza y priorizando 4 amenazas principales."
+  ],
+  "prediction": "Al estructurar el modelo de amenazas y definir los controles iniciales para el hito de integración continua, se alinean las medidas de seguridad con los riesgos prioritarios del sistema.",
+  "command": "git status",
+  "observedResult": "Creación y validación exitosa del archivo docs/threat-model.md con las amenazas priorizadas, su justificación y los controles correspondientes[cite: 18].",
+  "explanation": "Definí formalmente el modelo de amenazas inicial para establecer los lineamientos de seguridad del proyecto y respaldar el control de escaneo automático de secretos en el CI[cite: 18]."
+}
+    
+  ]
+}
