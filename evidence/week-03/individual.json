@@ -1,26 +1,43 @@
 {
   "schemaVersion": 1,
-  "week": 2,
+  "week": 3,
   "teamId": "10A-E01",
   "members": [
-    
     {
-  "studentId": "3523110714 Fatima Avelino Celis",
-  "commitShas": [
-    "17ae2421984320790be0cea08de8d34564393a39"
-  ],
-  "files": [
-    "docs/threat-model.md"
-  ],
-  "tests": [],
-  "reviews": [
-    "Analicé y documenté el modelo de amenazas inicial para CampusOps, estableciendo los activos a proteger, las fronteras de confianza y priorizando 4 amenazas principales."
-  ],
-  "prediction": "Al estructurar el modelo de amenazas y definir los controles iniciales para el hito de integración continua, se alinean las medidas de seguridad con los riesgos prioritarios del sistema.",
-  "command": "git status",
-  "observedResult": "Creación y validación exitosa del archivo docs/threat-model.md con las amenazas priorizadas, su justificación y los controles correspondientes[cite: 18].",
-  "explanation": "Definí formalmente el modelo de amenazas inicial para establecer los lineamientos de seguridad del proyecto y respaldar el control de escaneo automático de secretos en el CI[cite: 18]."
-}
-    
+      "studentId": "3523110714 Fatima Avelino Celis",
+      "commitShas": [
+        "17ae2421984320790be0cea08de8d34564393a39"
+      ],
+      "files": [
+        "docs/threat-model.md"
+      ],
+      "tests": [],
+      "reviews": [
+        "Analicé y documenté el modelo de amenazas inicial para CampusOps, estableciendo los activos a proteger, las fronteras de confianza y priorizando 4 amenazas principales."
+      ],
+      "prediction": "Al estructurar el modelo de amenazas y definir los controles iniciales para el hito de integración continua, se alinean las medidas de seguridad con los riesgos prioritarios del sistema.",
+      "command": "git status",
+      "observedResult": "Creación y validación exitosa del archivo docs/threat-model.md con las amenazas priorizadas, su justificación y los controles correspondientes.",
+      "explanation": "Definí formalmente el modelo de amenazas inicial para establecer los lineamientos de seguridad del proyecto y respaldar el control de escaneo automático de secretos en el CI."
+    },
+    {
+      "studentId": "3523110081 Janeth Cabrera Arguelles",
+      "commitShas": [
+        "db32af7165395fa85f9ea75889a5035e49cc344e"
+      ],
+      "files": [
+        "evidence/week-03/engineering.json"
+      ],
+      "tests": [
+        "python tools/course_public_evaluator.py --week 03 --mode verify"
+      ],
+      "reviews": [
+        "Ejecuté la evaluación estática y la verificación pública de la semana 3 para confirmar de forma independiente que no existieran credenciales ni secretos expuestos en el repositorio."
+      ],
+      "prediction": "Esperaba que al verificar el estado corregido del repositorio con la herramienta evaluadora, la prueba secret_scan reportara status pass sin hits de tokens expuestos.",
+      "command": "python tools/course_public_evaluator.py --week 03 --mode verify",
+      "observedResult": "La herramienta confirmó status pass en secret_scan con hits=[] y aprobó la integridad general del workflow y dependencias sin errores.",
+      "explanation": "Documenté la decisión de ingeniería en evidence/week-03/engineering.json argumentando la prioridad del escaneo automático de secretos en el pipeline de CI y realicé la validación técnica independiente."
+    }
   ]
 }
