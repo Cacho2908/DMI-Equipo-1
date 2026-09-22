@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "week": 3,
+  "commitSha": "PENDIENTE",
+  "generatedAt": "PENDIENTE",
+  "checks": [
+    {
+      "id": "credencial-expuesta-detectada",
+      "status": "fail",
+      "scenarioType": "failure",
+      "command": "python tools/course_public_evaluator.py --week 03 --mode verify",
+      "evidence": "Al agregar un archivo con una cadena con formato de GitHub token (ghp_...) al repositorio, el check 'secret_scan' reportó status fail con hits=['security-check-scratch.txt:github_token'], confirmando que el escaneo detecta credenciales expuestas antes de integrarse."
+    },
+    {
+      "id": "credencial-expuesta-corregida",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "python tools/course_public_evaluator.py --week 03 --mode verify",
+      "evidence": "Tras eliminar el archivo con el token simulado, el check 'secret_scan' volvió a reportar status pass con hits=[], confirmando que el repositorio queda libre de credenciales antes de la entrega."
+    }
+  ]
+}
