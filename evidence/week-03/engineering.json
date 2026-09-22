@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "week": 3,
+  "commitSha": "PENDIENTE",
+  "decision": "Priorizar el control de escaneo automático de secretos (secret_scan) en el workflow de CI como primera línea de defensa contra la amenaza de exposición de credenciales, antes que controles de autorización que aún no tienen funcionalidad de sesión que proteger.",
+  "alternatives": [
+    "Revisión manual de cada pull request buscando credenciales antes de aceptar cambios",
+    "Escaneo automático de secretos integrado al workflow de CI en cada push"
+  ],
+  "tradeoff": "El escaneo automático agrega un paso más al CI y solo detecta patrones conocidos (no cualquier secreto), pero garantiza una comprobación consistente en cada cambio sin depender de que una persona lo recuerde revisar manualmente.",
+  "requirementIds": ["AC-01", "AC-02", "AC-03", "AC-04", "AC-05"],
+  "verification": [
+    {
+      "command": "python tools/course_public_evaluator.py --week 03 --mode verify",
+      "result": "secret_scan: status fail, hits=['security-check-scratch.txt:github_token']",
+      "evidence": "reports/week-03/security.json (caso de falla documentado)"
+    },
+    {
+      "command": "python tools/course_public_evaluator.py --week 03 --mode verify",
+      "result": "secret_scan: status pass, hits=[]",
+      "evidence": "reports/week-03/security.json (caso corregido documentado)"
+    }
+  ]
+}
