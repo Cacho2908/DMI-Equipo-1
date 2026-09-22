@@ -51,23 +51,6 @@
       "command": "npm run test:smoke",
       "observedResult": "PASS course-tests/smoke.test.tsx - renders the reproducible baseline and resolves backend state (130 ms). Tests: 1 passed, 1 total.",
       "explanation": "Verifiqué de manera independiente en mi máquina local que los tests pasan tras la corrección en App.tsx y documenté la decisión de ingeniería con sus alternativas, trade-offs y comandos de comprobación."
-    },
-    {
-  "studentId": "3523110714 Fatima Avelino Celis",
-  "commitShas": [
-    "585a86a4069cf3b4596b6171cf6899773f3849d5"
-  ],
-  "files": [
-    "docs/threat-model.md"
-  ],
-  "tests": [],
-  "reviews": [
-    "Analicé y documenté el modelo de amenazas inicial para CampusOps, estableciendo los activos a proteger, las fronteras de confianza y priorizando 4 amenazas principales."
-  ],
-  "prediction": "Al estructurar el modelo de amenazas y definir los controles iniciales para el hito de integración continua, se alinean las medidas de seguridad con los riesgos prioritarios del sistema.",
-  "command": "git status",
-  "observedResult": "Creación y validación exitosa del archivo docs/threat-model.md con las amenazas priorizadas, su justificación y los controles correspondientes[cite: 18].",
-  "explanation": "Definí formalmente el modelo de amenazas inicial para establecer los lineamientos de seguridad del proyecto y respaldar el control de escaneo automático de secretos en el CI[cite: 18]."
-}
+    }
   ]
 }

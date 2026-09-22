@@ -4,13 +4,20 @@
   "teamId": "10A-E01",
   "members": [
     {
+      "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
+      "commitShas": ["a60cf18256b13f75b68b6dafdacf7f24be5c51b6"],
+      "files": ["reports/week-03/security.json"],
+      "tests": ["python tools/course_public_evaluator.py --week 03 --mode verify"],
+      "reviews": [],
+      "prediction": "Esperaba que al agregar un archivo con una cadena con formato de token de GitHub (ghp_...), el check secret_scan del evaluador lo detectara y marcara status fail.",
+      "command": "python tools/course_public_evaluator.py --week 03 --mode verify",
+      "observedResult": "La primera ejecución reportó secret_scan con status fail y hits=['security-check-scratch.txt:github_token']. Tras eliminar el archivo, la segunda ejecución reportó secret_scan con status pass y hits=[].",
+      "explanation": "Confirmé que el escaneo automático de secretos detecta de forma real credenciales expuestas con formato reconocible antes de que lleguen a integrarse, y que al eliminarlas el repositorio queda limpio, documentando el ciclo completo de falla y corrección para AC-03."
+    },
+    {
       "studentId": "3523110714 Fatima Avelino Celis",
-      "commitShas": [
-        "17ae2421984320790be0cea08de8d34564393a39"
-      ],
-      "files": [
-        "docs/threat-model.md"
-      ],
+      "commitShas": ["17ae2421984320790be0cea08de8d34564393a39"],
+      "files": ["docs/threat-model.md"],
       "tests": [],
       "reviews": [
         "Analicé y documenté el modelo de amenazas inicial para CampusOps, estableciendo los activos a proteger, las fronteras de confianza y priorizando 4 amenazas principales."
@@ -22,15 +29,9 @@
     },
     {
       "studentId": "3523110081 Janeth Cabrera Arguelles",
-      "commitShas": [
-        "db32af7165395fa85f9ea75889a5035e49cc344e"
-      ],
-      "files": [
-        "evidence/week-03/engineering.json"
-      ],
-      "tests": [
-        "python tools/course_public_evaluator.py --week 03 --mode verify"
-      ],
+      "commitShas": ["db32af7165395fa85f9ea75889a5035e49cc344e"],
+      "files": ["evidence/week-03/engineering.json"],
+      "tests": ["python tools/course_public_evaluator.py --week 03 --mode verify"],
       "reviews": [
         "Ejecuté la evaluación estática y la verificación pública de la semana 3 para confirmar de forma independiente que no existieran credenciales ni secretos expuestos en el repositorio."
       ],

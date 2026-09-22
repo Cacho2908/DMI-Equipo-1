@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 3,
-  "commitSha": "PENDIENTE",
+  "commitSha": "817e6513bc3bc04947a10cc06ea1bec824fe71cc",
   "decision": "Priorizar el control de escaneo automático de secretos (secret_scan) en el workflow de CI como primera línea de defensa contra la amenaza de exposición de credenciales, antes que controles de autorización que aún no tienen funcionalidad de sesión que proteger.",
   "alternatives": [
     "Revisión manual de cada pull request buscando credenciales antes de aceptar cambios",
