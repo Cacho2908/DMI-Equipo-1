@@ -4,14 +4,17 @@ export type BackendHealth = Readonly<{
   contractVersion: 1;
 }>;
 
-const DEFAULT_URL = 'http://127.0.0.1:4310';
-
 export async function getBackendHealth(
-  baseUrl = process.env.EXPO_PUBLIC_COURSE_BACKEND_URL ?? DEFAULT_URL,
+  baseUrl = process.env.EXPO_PUBLIC_COURSE_BACKEND_URL,
 ): Promise<BackendHealth> {
+  
+  if (!baseUrl) {
+    throw new Error('Configuración del servicio no disponible.');
+  }
+
   const response = await fetch(`${baseUrl}/health`);
   if (!response.ok) {
-    throw new Error(`Backend health failed with ${response.status}`);
+    throw new Error('No fue posible conectar con el servicio.');
   }
   const payload: unknown = await response.json();
   if (
