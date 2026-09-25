@@ -1,0 +1,8 @@
+﻿
+src\api\session.ts:18:    throw new Error('No fue 
+posible iniciar sesión.');
+src\api\session.ts:22:  console.log('Usuario 
+autenticado correctamente:', { userId: user.id, 
+role: user.role });
+
+
