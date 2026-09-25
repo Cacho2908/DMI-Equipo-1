@@ -26,9 +26,10 @@ Se removió la constante por defecto y se implementó una validación estricta q
 **Antes:**
 ```typescript
 const DEFAULT_URL = 'http://127.0.0.1:4310';
-Después:
+```
 
-TypeScript
+**Después:**
+```typescript
 export async function getBackendHealth(
   baseUrl = process.env.EXPO_PUBLIC_COURSE_BACKEND_URL,
 ): Promise<BackendHealth> {
@@ -38,47 +39,65 @@ export async function getBackendHealth(
   const response = await fetch(`${baseUrl}/health`);
   // ...
 }
-Evidencia
-Hallazgo 2: Datos de infraestructura acoplados al repositorio
-Problema encontrado
-El archivo src/infrastructure/incidents/fakeIncidentRepository.ts almacenaba los arreglos de datos simulados e identificadores directamente dentro de las funciones de infraestructura.
+```
 
-Riesgo
+### Evidencia
+![Endpoint Corregido](evidence/endpoint-corregido.png)
+
+---
+
+## Hallazgo 2: Datos de infraestructura acoplados al repositorio
+
+### Problema encontrado
+El archivo `src/infrastructure/incidents/fakeIncidentRepository.ts` almacenaba los arreglos de datos simulados e identificadores directamente dentro de las funciones de infraestructura.
+
+### Riesgo
 Acoplar los datos de prueba directamente en el código disminuye la mantenibilidad y mezcla las capas de datos con la lógica de negocio.
 
-Solución aplicada
-Se creó un archivo dedicado (incidentsData.ts) para aislar los datos mock y se importaron limpiamente al repositorio.
+### Solución aplicada
+Se creó un archivo dedicado (`incidentsData.ts`) para aislar los datos *mock* y se importaron limpiamente al repositorio.
 
-Antes:
-
-TypeScript
+**Antes:**
+```typescript
 const FAKE_INCIDENTS: readonly Incident[] = [ ... ];
-Después:
+```
 
-TypeScript
+**Después:**
+```typescript
 import { FAKE_INCIDENTS } from './incidentsData';
-Evidencia
-Hallazgo 3: Mensajes de error expuestos en la interfaz
-Problema encontrado
-En el componente src/ui/screens/IncidentDetailScreen.tsx, el sistema mostraba un texto directo en pantalla (<Text>No encontrada</Text>) sin un tratamiento neutral.
+```
 
-Riesgo
+### Evidencia
+![Repositorio Aislado](evidence/repositorio-aislado.png)
+
+---
+
+## Hallazgo 3: Mensajes de error expuestos en la interfaz
+
+### Problema encontrado
+En el componente `src/ui/screens/IncidentDetailScreen.tsx`, el sistema mostraba un texto directo en pantalla (`<Text>No encontrada</Text>`) sin un tratamiento neutral.
+
+### Riesgo
 Revelar estados de búsqueda específicos puede facilitar la enumeración de recursos por parte de usuarios externos.
 
-Solución aplicada
+### Solución aplicada
 Se sanitizó el componente visual para retornar un mensaje genérico y seguro.
 
-Antes:
-
-TypeScript
+**Antes:**
+```tsx
 if (!incident) return <Text>No encontrada</Text>;
-Después:
+```
 
-TypeScript
+**Después:**
+```tsx
 if (!incident) {
   return (
     <View>
       <Text>El registro solicitado no se encuentra disponible.</Text>
     </View>
   );
-  }
+}
+```
+
+### Evidencia
+![UI Sanitizada](evidence/ui-sanitizada.png)
