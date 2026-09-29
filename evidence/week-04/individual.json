@@ -6,7 +6,7 @@
     
     {
   "studentId": "3523110714 Fatima Avelino Celis",
-  "commitShas": [],
+  "commitShas": ["5d05f5ce4be5010be34c862c8f439454d20bf23a"],
   "files": ["docs/security-controls.md"],
   "tests": [],
   "reviews": [
