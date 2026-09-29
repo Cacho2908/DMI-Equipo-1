@@ -40,6 +40,22 @@
       "command": "npx jest course-tests/team/week-04-negative.test.ts",
       "observedResult": "En la primera ejecución pasaron 4 de 6 pruebas y fallaron NT-04 y NT-05: el error propagado por saveSessionToken y clearSessionToken conservaba el mensaje original. Tras agregar try/catch con mensajes genéricos, las 6 pruebas pasaron. El escáner secret_scan reportó fail con un secreto ficticio plantado y pass tras eliminarlo.",
       "explanation": "Escribí pruebas negativas que provocan fallos simulados de expo-secure-store para verificar que el token no aparezca en errores, corregí secureSessionStore.ts para lanzar mensajes genéricos, y documenté el ciclo fail a pass del escáner de secretos. Con esto se cubren las amenazas de exponer credenciales y de filtrar datos en registros."
+    },
+        {
+      "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
+      "commitShas": ["02ba2f40c3299c823aa131d52491a31ebfd0dc73", "0fc1030615d7778d5e315aaf4f5e0c4694c745c1"],
+      "files": [
+        "src/course-evaluation/index.ts",
+        "src/infrastructure/session/secureSessionStore.ts",
+        "package.json",
+        "app.json"
+      ],
+      "tests": ["npx jest --ci --runInBand course-tests/public/week-04.test.ts", "npx tsc --noEmit"],
+      "reviews": [],
+      "prediction": "Esperaba que al implementar redactForTelemetry recorriendo objetos y arreglos anidados sin mutar la entrada, el test público de la semana 4 pasara verificando que los campos sensibles se reemplazan por '[REDACTED]' y los técnicos se conservan.",
+      "command": "npx jest --ci --runInBand course-tests/public/week-04.test.ts",
+      "observedResult": "El test 'CampusOps redacts personal and incident-sensitive data while preserving technical context' pasó (1 passed, 1 total), confirmando que campos anidados como profile.email y arreglos como photos se redactan correctamente, mientras que incidentId se conserva.",
+      "explanation": "Implementé redactForTelemetry siguiendo el contrato de docs/CAMPUSOPS_API.md, normalizando claves contra una lista fija de campos sensibles, y agregué la primera versión del almacenamiento seguro del token de sesión con expo-secure-store; Janeth detectó después que dos de sus funciones no capturaban errores del almacén seguro y agregó el try/catch correspondiente."
     }
   ]
 }
