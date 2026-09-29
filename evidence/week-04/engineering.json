@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 4,
-  "commitSha": "5d73eaba3d4d0c68f53c40e8db72a4ee6c49efee",
+  "commitSha": "502933f4921b63c4a70baf5fc0ba6966e689ada2",
   "decision": "Guardar el token de sesión con expo-secure-store (Keychain en iOS, Keystore en Android) y sanitizar todo registro con redactForTelemetry, que reemplaza por '[REDACTED]' los campos sensibles en objetos anidados y listas sin mutar la entrada. Durante la revisión independiente se encontró que saveSessionToken y clearSessionToken propagaban el error original del almacén seguro, por lo que se les agregó try/catch con mensajes genéricos para que un fallo no exponga el token ni detalles internos.",
   "alternatives": [
     "AsyncStorage: descartado porque guarda el valor sin cifrado en el dispositivo.",
