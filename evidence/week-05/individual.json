@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "week": 4,
+  "teamId": "10A-E01",
+  "members": [
+    {
+  "studentId": "3523110714 Fatima Avelino Celis",
+  "commitShas": [
+    ""
+  ],
+  "files": [
+    "docs/api-contract.md"
+  ],
+  "tests": [],
+  "reviews": [
+    "Documenté el contrato de la API, detallando las solicitudes HTTP, la estructura de respuesta con envelope, el mapeo del DTO del backend al modelo de dominio y la gestión de los 4 tipos de errores del cliente cloud."
+  ],
+  "prediction": "Al documentar de forma clara el contrato de la API y la estrategia de mapeo, se establece una base sólida para que el equipo corra y valide las pruebas de contrato de la Semana 5 sin acoplar la UI al backend.",
+  "command": "git log -n 1 --pretty=format:\"%H\"",
+  "observedResult": "Creación y confirmación exitosa del archivo docs/api-contract.md en mi rama personal con el detalle de endpoints, errores y validaciones.",
+  "explanation": "Aporté la documentación oficial del contrato de API y las reglas de mapeo de DTO a dominio requeridas para la Semana 5 del proyecto."
+}
+       
+  ]
+}
