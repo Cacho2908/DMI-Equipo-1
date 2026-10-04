@@ -5,7 +5,7 @@
   "members": [
     {
   "studentId": "3523110714 Fatima Avelino Celis",
-  "commitShas": ["cd9fba2267788a4a0ba4b2a9f3f8468de9516056"],
+  "commitShas": ["cd9fba2267788a4a0ba4b2a9f3f8468de9516056", "8bcdde4b1ff4868d2ea149895d338068b16736d9"],
   "files": [
     "docs/api-contract.md"
   ],
