@@ -5,6 +5,16 @@ const DEFAULT_URL = process.env.EXPO_PUBLIC_COURSE_BACKEND_URL ?? 'http://127.0.
 const REQUEST_TIMEOUT_MS = 4000;
 const AUTH_HEADER = 'Bearer course-valid-token';
 
+const VALID_CATEGORIES = [
+  'electrical',
+  'laboratory',
+  'water',
+  'connectivity',
+  'equipment',
+  'safety',
+  'maintenance',
+] as const;
+
 export type CloudClientError =
   | { kind: 'invalid_payload' }
   | { kind: 'timeout' }
@@ -13,13 +23,22 @@ export type CloudClientError =
 
 export type CloudResult<T> = Readonly<{ ok: true; value: T }> | Readonly<{ ok: false; error: CloudClientError }>;
 
-function mapIncidentDtoToDomain(id: string, status: string, payload: Record<string, unknown>): Incident {
+function mapIncidentDtoToDomain(id: string, status: string, payload: Record<string, unknown>): Incident | null {
+  const { category, description, reporterId } = payload;
+
+  if (typeof category !== 'string' || !VALID_CATEGORIES.includes(category as (typeof VALID_CATEGORIES)[number])) {
+    return null;
+  }
+  if (typeof description !== 'string' || description.length === 0) {
+    return null;
+  }
+
   return {
     id,
-    title: typeof payload.description === 'string' ? payload.description : '(sin descripción)',
-    category: payload.category as Incident['category'],
+    title: description,
+    category: category as Incident['category'],
     status: status as Incident['status'],
-    reporterId: typeof payload.reporterId === 'string' ? payload.reporterId : '',
+    reporterId: typeof reporterId === 'string' ? reporterId : '',
   };
 }
 
@@ -73,10 +92,11 @@ export function createCloudIncidentClient(actorId: string, baseUrl = DEFAULT_URL
         // no inventamos datos, devolvemos null en vez de un error.
         return { ok: true, value: null };
       }
-      return {
-        ok: true,
-        value: mapIncidentDtoToDomain(parsed.value.id, parsed.value.status, parsed.value.payload),
-      };
+      const incident = mapIncidentDtoToDomain(parsed.value.id, parsed.value.status, parsed.value.payload);
+      if (incident === null) {
+        return { ok: false, error: { kind: 'invalid_payload' } };
+      }
+      return { ok: true, value: incident };
     },
 
     async listIncidents(): Promise<CloudResult<readonly Incident[]>> {
@@ -92,7 +112,8 @@ export function createCloudIncidentClient(actorId: string, baseUrl = DEFAULT_URL
       for (const raw of envelope.items) {
         const parsed = parseRemoteResource(raw);
         if (!parsed.ok || parsed.value.payload === null) continue;
-        incidents.push(mapIncidentDtoToDomain(parsed.value.id, parsed.value.status, parsed.value.payload));
+        const incident = mapIncidentDtoToDomain(parsed.value.id, parsed.value.status, parsed.value.payload);
+        if (incident !== null) incidents.push(incident);
       }
       return { ok: true, value: incidents };
     },
@@ -115,10 +136,11 @@ export function createCloudIncidentClient(actorId: string, baseUrl = DEFAULT_URL
       if (!parsed.ok || parsed.value.payload === null) {
         return { ok: false, error: { kind: 'invalid_payload' } };
       }
-      return {
-        ok: true,
-        value: mapIncidentDtoToDomain(parsed.value.id, parsed.value.status, parsed.value.payload),
-      };
+      const incident = mapIncidentDtoToDomain(parsed.value.id, parsed.value.status, parsed.value.payload);
+      if (incident === null) {
+        return { ok: false, error: { kind: 'invalid_payload' } };
+      }
+      return { ok: true, value: incident };
     },
   };
 }
