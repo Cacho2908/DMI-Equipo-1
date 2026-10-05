@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "week": 4,
+  "week": 5,
   "teamId": "10A-E01",
   "members": [
     {
@@ -17,7 +17,42 @@
   "command": "git log -n 1 --pretty=format:\"%H\"",
   "observedResult": "Creación y confirmación exitosa del archivo docs/api-contract.md en mi rama personal con el detalle de endpoints, errores y validaciones.",
   "explanation": "Aporté la documentación oficial del contrato de API y las reglas de mapeo de DTO a dominio requeridas para la Semana 5 del proyecto."
-}
-       
+},
+    {
+      "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
+      "commitShas": [
+        "36da179cb0ba6ecd0ce3ac51b99e387a8e8dd59d",
+        "76e6ec74b4db47cd618cc4a34bae798bedc15a83",
+        "8b3e6b47653315fe653b1d6abf0727a5b040b3de"
+      ],
+      "files": [
+        "src/course-evaluation/index.ts",
+        "src/infrastructure/incidents/cloudIncidentClient.ts"
+      ],
+      "tests": ["npx jest --ci --runInBand course-tests/public/week-05.test.ts", "npx tsc --noEmit"],
+      "reviews": [],
+      "prediction": "Esperaba que parseRemoteResource rechazara el input cuando id fuera vacío o version no fuera un entero, y aceptara un payload null como caso válido distinto de un payload malformado.",
+      "command": "npx jest --ci --runInBand course-tests/public/week-05.test.ts",
+      "observedResult": "Los 5 casos del test público pasaron (5 passed, 5 total): objeto válido completo, válido con payload null, id vacío rechazado, version como string rechazado, e input null rechazado.",
+      "explanation": "Implementé parseRemoteResource validando cada campo del contrato por separado y devolviendo un resultado discriminado (ok/error), y construí un cliente cloud que separa completamente las llamadas HTTP de la UI, mapeando el DTO real del backend (que usa description en vez de title) al modelo de dominio de la Semana 2, y representando timeout, error 500, red y payload inválido como tipos de error distinguibles en vez de lanzar excepciones sin controlar."
+    },
+           {
+      "studentId": "3523110081 Janeth Cabrera Arguelles",
+      "commitShas": ["709b214a68e4f0d8e4fdb3687809eafd8084fcf9"],
+      "files": [
+        "course-tests/team/week-05-contract.test.ts",
+        "reports/week-05/contract-tests.json",
+        "reports/week-05/failure-matrix.json",
+        "evidence/week-05/engineering.json"
+      ],
+      "tests": ["npx jest course-tests/team/week-05-contract.test.ts"],
+      "reviews": [
+        "Ejecuté de forma independiente typecheck, lint, test:smoke y course-tests/public/week-05.test.ts sobre el cliente de Héctor y capturé las respuestas reales del backend en los escenarios malformed, server_error, slow y nullable, y al crear una incidencia. Con eso detecté que mapIncidentDtoToDomain no validaba category (caso FM-09)."
+      ],
+      "prediction": "Esperaba que el cliente distinguiera payload inválido, timeout y error del servidor, pero sospechaba que un sobre válido con un payload sin category pasaría sin ser rechazado, porque el mapeo original solo hacía un cast.",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "observedResult": "Primera corrida contra el cliente original: 19 pruebas pasaron y falló FM-09. Después de que Héctor validó category y description, pasaron las 20.",
+      "explanation": "Escribí pruebas del contrato y de las fallas con respuestas simuladas que reproducen los cuerpos reales del backend (malformed, 500, slow, payload null, creación) y generan contract-tests.json y failure-matrix.json. La prueba FM-09 destapó el cast sin validar, que Héctor corrigió. Documenté la decisión del límite entre DTO, dominio y errores en engineering.json."
+    }
   ]
 }
