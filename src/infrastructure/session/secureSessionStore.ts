@@ -34,3 +34,21 @@ export async function clearSessionToken(): Promise<void> {
     throw new Error('No se pudo cerrar la sesión de forma segura');
   }
 }
+
+const REFRESH_TOKEN_KEY = 'campusops.session.refresh';
+
+export async function saveRefreshToken(token: string): Promise<void> {
+  try {
+    await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, token);
+  } catch {
+    throw new Error('No se pudo guardar la sesión de forma segura');
+  }
+}
+
+export async function clearRefreshToken(): Promise<void> {
+  try {
+    await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+  } catch {
+    throw new Error('No se pudo cerrar la sesión de forma segura');
+  }
+}
