@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "week": 4,
+  "commitSha": "502933f4921b63c4a70baf5fc0ba6966e689ada2",
+  "decision": "Guardar el token de sesión con expo-secure-store (Keychain en iOS, Keystore en Android) y sanitizar todo registro con redactForTelemetry, que reemplaza por '[REDACTED]' los campos sensibles en objetos anidados y listas sin mutar la entrada. Durante la revisión independiente se encontró que saveSessionToken y clearSessionToken propagaban el error original del almacén seguro, por lo que se les agregó try/catch con mensajes genéricos para que un fallo no exponga el token ni detalles internos.",
+  "alternatives": [
+    "AsyncStorage: descartado porque guarda el valor sin cifrado en el dispositivo.",
+    "Guardar el token solo en memoria: descartado porque la sesión se pierde al cerrar la app, aunque evita persistencia en disco."
+  ],
+  "tradeoff": "expo-secure-store añade una dependencia nativa y sus llamadas son asíncronas y pueden fallar, así que hay que manejar errores y los mensajes genéricos dificultan el diagnóstico. A cambio, el token queda cifrado por el sistema. La redacción depende de una lista de claves: un campo nuevo con otro nombre no se ocultaría hasta agregarlo.",
+  "requirementIds": ["AC-01", "AC-02", "AC-03", "AC-04", "AC-05"],
+  "verification": [
+    {
+      "command": "npx jest course-tests/public/week-04.test.ts",
+      "result": "1 passed",
+      "evidence": "El test público confirma que se redactan datos personales y sensibles y se conserva el contexto técnico."
+    },
+    {
+      "command": "npx jest course-tests/team/week-04-negative.test.ts",
+      "result": "Antes de la corrección: 4 passed, 2 failed (NT-04 y NT-05). Después: 6 passed.",
+      "evidence": "reports/week-04/negative-tests.json: los errores al guardar y borrar el token ya no propagan el mensaje original."
+    },
+    {
+      "command": "python tools/course_public_evaluator.py --week 04 --mode verify",
+      "result": "secret_scan: fail con secreto plantado, pass con hits=[] tras eliminarlo",
+      "evidence": "reports/week-04/secret-scan.json"
+    }
+  ]
+}
