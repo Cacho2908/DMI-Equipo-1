@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "week": 6,
+  "teamId": "10A-E01",
+  "members": [
+    {
+  "studentId": "3523110714 Fatima Avelino Celis",
+  "commitShas": [
+    "ff16efea4225747dbf1efd6134ee84e95b3f2e61"
+  ],
+  "files": [
+    "docs/session-state-machine.mmd",
+    "src/application/authorization.ts",
+    "docs/ai-assistance.md"
+  ],
+  "tests": [],
+  "reviews": [
+    "Diseñé el diagrama de la máquina de estados de sesión e implementé la lógica pura de autorización en TypeScript, validando reglas de negocio por rol y visibilidad de incidencias, además de documentar la asistencia de IA."
+  ],
+  "prediction": "El diagrama de estados guiará el desarrollo del núcleo de sesión, mientras que la función de autorización pura permitirá que las pruebas de acceso validen la seguridad sin acoplarse a la interfaz gráfica.",
+  "command": "git rev-parse HEAD",
+  "observedResult": "Creación y confirmación exitosa de los archivos de modelado, autorización y documentación en mi rama personal para la Semana 6.",
+  "explanation": "Aporté el control estricto de permisos (Coordinador, Técnico, Reportante) y el flujo de estados requeridos para el correcto funcionamiento de las sesiones y la seguridad de la aplicación."
+}   
+  ]
+}
