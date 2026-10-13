@@ -1,71 +1,40 @@
-export type Role = 'coordinator' | 'technician' | 'reporter';
-export type Action = 
-  | 'assign' 
-  | 'prioritize' 
-  | 'close' 
-  | 'reopen' 
-  | 'start' 
-  | 'resolve' 
-  | 'create' 
-  | 'comment' 
-  | 'attach_evidence';
+import type { IncidentAction } from '../domain/incidentActions';
+import type { SessionRole } from './session/sessionManager';
 
-export interface Actor {
-  id: string;
-  role: Role;
-}
+export type AuthorizationContext = Readonly<{
+  actorId: string;
+  role: SessionRole;
+  incident: Readonly<{ reporterId: string; assignedTechnicianId: string | null }>;
+}>;
 
-export interface Incident {
-  reporterId: string;
-  assignedTo?: string | null;
-}
+export function canPerformAction(action: IncidentAction, ctx: AuthorizationContext): boolean {
+  const { actorId, role, incident } = ctx;
 
-/**
- * Evalúa si una incidencia es visible para un actor.
- * Los coordinadores y técnicos ven todas. Los reportantes solo ven las suyas.
- */
-export function isIncidentVisible(actor: Actor, incident: Incident): boolean {
-  if (actor.role === 'coordinator' || actor.role === 'technician') {
-    return true;
-  }
-  return incident.reporterId === actor.id;
-}
-
-/**
- * Función pura que centraliza las reglas de autorización del backend.
- */
-export function canPerformAction(actor: Actor, action: Action, incident?: Incident): boolean {
-  // Regla: Reportante crea incidencias (no requiere un objeto incidente existente)
-  if (action === 'create') {
-    return actor.role === 'reporter';
+  // 1. Determinar la visibilidad de la incidencia
+  let isVisible = false;
+  if (role === 'coordinator') {
+    isVisible = true;
+  } else if (role === 'reporter' && incident.reporterId === actorId) {
+    isVisible = true;
+  } else if (role === 'technician' && incident.assignedTechnicianId === actorId) {
+    isVisible = true;
   }
 
-  // Para cualquier otra acción, se requiere la incidencia objetivo
-  if (!incident) {
-    return false;
-  }
+  // 2. Evaluar permisos según la acción
+  switch (action) {
+    case 'assign':
+    case 'prioritize':
+    case 'close':
+    case 'reopen':
+      return role === 'coordinator';
 
-  // Regla: Comentar y adjuntar evidencia SOLO en incidencias visibles
-  if (action === 'comment' || action === 'attach_evidence') {
-    return isIncidentVisible(actor, incident);
-  }
+    case 'start':
+    case 'resolve':
+      return role === 'technician' && incident.assignedTechnicianId === actorId;
 
-  // Reglas específicas por rol
-  switch (actor.role) {
-    case 'coordinator':
-      // Coordinador: assign, prioritize, close, reopen
-      return ['assign', 'prioritize', 'close', 'reopen'].includes(action);
-
-    case 'technician':
-      // Técnico: start y resolve SOLO en su incidencia asignada
-      if (action === 'start' || action === 'resolve') {
-        return incident.assignedTo === actor.id;
-      }
-      return false;
-
-    case 'reporter':
-      // El reportante no tiene acciones adicionales sobre una incidencia existente
-      return false;
+    case 'comment':
+    case 'add_evidence':
+      return isVisible;
 
     default:
       return false;

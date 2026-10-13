@@ -8,5 +8,7 @@ stateDiagram-v2
     authenticated --> refreshing: Token por expirar (coordinateRefresh)
     refreshing --> authenticated: Refresh exitoso
     refreshing --> anonymous: Refresh fallido / Expiración de sesión
+    refreshing --> anonymous: logout
 
     authenticated --> anonymous: Cerrar sesión (logout)
+    authenticated --> anonymous: la solicitud sigue en 401 tras renovar

@@ -1,12 +1,13 @@
-# Asistencia de IA - Semana 6
+# Asistencia de Inteligencia Artificial (Semana 6)
 
-Durante la Semana 6, se utilizó asistencia de inteligencia artificial para los siguientes entregables:
+Este documento registra el uso de herramientas de asistencia de inteligencia artificial para apoyar el desarrollo de las tareas de la Semana 6 del proyecto de equipo.
 
-1. **Diseño de Máquina de Estados (`docs/session-state-machine.mmd`):** 
-   - Generación de la sintaxis Mermaid para mapear el ciclo de vida de la sesión.
-   - Estructuración de las transiciones entre los estados `anonymous`, `authenticating`, `authenticated` y `refreshing` basándose en los eventos del reductor del núcleo de sesión.
+## 1. Alcance de la Asistencia
+- **Diseño de máquina de estados (`docs/session-state-machine.mmd`):** Estructuración de los estados de sesión (`anonymous`, `authenticating`, `authenticated`, `refreshing`) y sus transiciones.
+- **Implementación de Reglas de Autorización (`src/application/authorization.ts`):** Redacción de la función pura `canPerformAction` en TypeScript utilizando el `AuthorizationContext`.
 
-2. **Lógica de Autorización (`src/application/authorization.ts`):**
-   - Desarrollo de funciones puras (`isIncidentVisible` y `canPerformAction`) en TypeScript.
-   - Traducción de las reglas de negocio en código duro para evitar dependencias de la UI (ocultamiento de botones), validando permisos por rol (Coordinador, Técnico, Reportante) y titularidad de asignación para los técnicos.
-   
+## 2. Validación Humana
+Todo el código e información generados mediante asistencia de IA han sido verificados rigurosamente:
+- Se validó que la lógica cumpla estrictamente con la matriz de permisos de roles (Coordinador, Técnico, Reportante).
+- Se probó la tabla de permisos y se revisó el código fuente línea por línea para corregir ortografía y redacción.
+- Se ejecutaron exitosamente los comandos de validación estática del proyecto (`npx tsc --noEmit` y `npm run lint`) para garantizar que no existan errores de compilación ni de formato.
