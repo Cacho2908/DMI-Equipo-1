@@ -45,6 +45,37 @@
       "command": "npx jest course-tests/team/week-06-session.test.ts",
       "observedResult": "22 pruebas pasaron de 22. 20 solicitudes con 401 produjeron 1 sola renovación y 40 envíos; la renovación fallida y el logout dejaron la sesión anónima sin tokens; no se encontraron tokens en logs ni consola. En la corrida completa de jest, FM-08 de la semana 5 falló (lista con un elemento corrupto); no confirmé la causa.",
       "explanation": "Escribí y ejecuté las pruebas de equipo de sesión segura contra el backend real, con reloj controlable. Con ellas se generaron auth-tests.json y concurrency.json, y redacté la decisión de ingeniería (renovación compartida con reintento único) a partir de esos resultados."
-    }
+    },
+    
+{
+  "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
+  "commitShas": [
+    "810b90afe5d38d25db5835322237f00ecdb64d51",
+    "10750fb27fa54d1e79337e89d7106cdef6788e36",
+    "ed55b9d36fa808926cd62383ae00fe60ac4bc9c1"
+  ],
+  "files": [
+    "src/application/session/authEvents.ts",
+    "src/application/session/sessionManager.ts",
+    "src/course-evaluation/index.ts",
+    "src/infrastructure/incidents/cloudIncidentClient.ts",
+    "src/infrastructure/incidents/cloudIncidentActions.ts",
+    "src/application/availableActions.ts",
+    "src/ui/screens/IncidentActionBar.tsx",
+    "App.tsx"
+  ],
+  "tests": [
+    "npx jest --ci --runInBand course-tests/public/week-06.test.ts",
+    "npx tsc --noEmit",
+    "npm run lint",
+    "npm run test:smoke"
+  ],
+  "reviews": [],
+  "prediction": "Esperaba que las solicitudes simultáneas con error 401 compartieran una sola renovación del token y que al cerrar sesión se eliminaran los datos guardados.",
+  "command": "npx jest --ci --runInBand course-tests/public/week-06.test.ts",
+  "observedResult": "Pasaron las 2 pruebas públicas de Semana 6 y la prueba smoke (1 de 1). TypeScript y ESLint terminaron sin errores. También pasaron las 22 pruebas de sesión del equipo.",
+  "explanation": "La lógica de sesión permite compartir una renovación del token entre varias solicitudes y evita reintentos infinitos. En la aplicación se muestran acciones de acuerdo con el perfil del usuario y se validan los permisos antes de ejecutarlas."
+}
+
   ]
 }
