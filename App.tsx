@@ -3,14 +3,20 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { getBackendHealth } from './src/api/courseBackend';
+import { canPerformAction } from './src/application/authorization';
+import { availableActions } from './src/application/availableActions';
+import { performIncidentAction } from './src/application/incidentActions';
 import { SessionManager, type SessionState } from './src/application/session/sessionManager';
 import type { Incident } from './src/domain/incident';
+import type { ActionFailureReason, IncidentSnapshot } from './src/domain/incidentActions';
+import { createCloudIncidentActions } from './src/infrastructure/incidents/cloudIncidentActions';
 import {
   createCloudIncidentClient,
   type CloudClientError,
 } from './src/infrastructure/incidents/cloudIncidentClient';
 import { createHttpAuthGateway } from './src/infrastructure/session/httpAuthGateway';
 import { createSecureTokenStore } from './src/infrastructure/session/secureTokenStore';
+import { IncidentActionBar } from './src/ui/screens/IncidentActionBar';
 import { IncidentDetailScreen } from './src/ui/screens/IncidentDetailScreen';
 import { IncidentListScreen } from './src/ui/screens/IncidentListScreen';
 import { LoginScreen, type LoginActor } from './src/ui/screens/LoginScreen';
@@ -36,6 +42,21 @@ function describeError(error: CloudClientError): string {
   }
 }
 
+function describeActionFailure(reason: ActionFailureReason): string {
+  switch (reason) {
+    case 'forbidden':
+      return 'No tienes permiso para realizar esta acción.';
+    case 'conflict':
+      return 'La incidencia cambió mientras la veías. Se recargó; inténtalo de nuevo.';
+    case 'rejected':
+      return 'El servidor no aceptó la acción.';
+    case 'unauthorized':
+      return 'La sesión expiró. Inicia sesión de nuevo.';
+    case 'unavailable':
+      return 'No fue posible completar la acción.';
+  }
+}
+
 export default function App() {
   const manager = useMemo(
     () => new SessionManager({ gateway: createHttpAuthGateway(), store: createSecureTokenStore() }),
@@ -47,12 +68,20 @@ export default function App() {
   const [message, setMessage] = useState<string | null>(null);
   const [incidents, setIncidents] = useState<readonly Incident[]>([]);
   const [detailId, setDetailId] = useState<string | null>(null);
-  const [selected, setSelected] = useState<Incident | null>(null);
+  const [snapshot, setSnapshot] = useState<IncidentSnapshot | null>(null);
+  const [actionBusy, setActionBusy] = useState(false);
+  const [actionMessage, setActionMessage] = useState<string | null>(null);
 
   const actorId =
     session.status === 'authenticated' || session.status === 'refreshing' ? session.actorId : null;
+  const role =
+    session.status === 'authenticated' || session.status === 'refreshing' ? session.role : null;
   const client = useMemo(
     () => (actorId === null ? null : createCloudIncidentClient(actorId, undefined, manager)),
+    [actorId, manager],
+  );
+  const actions = useMemo(
+    () => (actorId === null ? null : createCloudIncidentActions(actorId, manager)),
     [actorId, manager],
   );
 
@@ -74,7 +103,7 @@ export default function App() {
         setSession(manager.getState());
         setIncidents([]);
         setDetailId(null);
-        setSelected(null);
+        setSnapshot(null);
       }
     },
     [manager],
@@ -98,12 +127,12 @@ export default function App() {
   }, [client, handleFailure]);
 
   useEffect(() => {
-    if (client === null || detailId === null) return undefined;
+    if (actions === null || detailId === null) return undefined;
     let active = true;
-    client.getIncidentById(detailId).then((result) => {
+    actions.getIncidentSnapshot(detailId).then((result) => {
       if (!active) return;
       if (result.ok) {
-        setSelected(result.value);
+        setSnapshot(result.value);
       } else {
         handleFailure(result.error);
       }
@@ -111,7 +140,50 @@ export default function App() {
     return () => {
       active = false;
     };
-  }, [client, detailId, handleFailure]);
+  }, [actions, detailId, handleFailure]);
+
+  const buttons = useMemo(
+    () =>
+      snapshot !== null && actorId !== null && role !== null
+        ? availableActions(canPerformAction, { actorId, role }, snapshot)
+        : [],
+    [snapshot, actorId, role],
+  );
+
+  const handleAction = useCallback(
+    async (key: string) => {
+      const chosen = buttons.find((button) => button.request.action === key);
+      if (chosen === undefined || actions === null || actorId === null || role === null || snapshot === null) {
+        return;
+      }
+      setActionBusy(true);
+      setActionMessage(null);
+      const outcome = await performIncidentAction(
+        { gateway: actions, canPerform: canPerformAction },
+        { actorId, role },
+        snapshot,
+        chosen.request,
+      );
+      if (outcome.ok) {
+        setSnapshot(outcome.incident);
+        setIncidents((current) =>
+          current.map((item) =>
+            item.id === outcome.incident.id ? { ...item, status: outcome.incident.status } : item,
+          ),
+        );
+      } else if (outcome.reason === 'unauthorized') {
+        handleFailure({ kind: 'unauthorized' });
+      } else {
+        setActionMessage(describeActionFailure(outcome.reason));
+        if (outcome.reason === 'conflict') {
+          const fresh = await actions.getIncidentSnapshot(snapshot.id);
+          if (fresh.ok) setSnapshot(fresh.value);
+        }
+      }
+      setActionBusy(false);
+    },
+    [actions, actorId, buttons, handleFailure, role, snapshot],
+  );
 
   const handleLogin = useCallback(
     async (id: string) => {
@@ -139,7 +211,7 @@ export default function App() {
     setSession(manager.getState());
     setIncidents([]);
     setDetailId(null);
-    setSelected(null);
+    setSnapshot(null);
   }, [manager]);
 
   return (
@@ -165,13 +237,19 @@ export default function App() {
           <Pressable
             onPress={() => {
               setDetailId(null);
-              setSelected(null);
+              setSnapshot(null);
             }}
             testID="back-button"
           >
             <Text>Volver</Text>
           </Pressable>
-          <IncidentDetailScreen incident={selected} />
+          <IncidentDetailScreen incident={snapshot} />
+          <IncidentActionBar
+            buttons={buttons.map((button) => ({ key: button.request.action, label: button.label }))}
+            busy={actionBusy}
+            message={actionMessage}
+            onPress={handleAction}
+          />
         </View>
       ) : (
         <IncidentListScreen incidents={incidents} onSelect={setDetailId} />
