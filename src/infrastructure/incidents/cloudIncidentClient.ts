@@ -26,7 +26,7 @@ export type CloudClientError =
 
 export type CloudResult<T> = Readonly<{ ok: true; value: T }> | Readonly<{ ok: false; error: CloudClientError }>;
 
-function mapIncidentDtoToDomain(id: string, status: string, payload: Record<string, unknown>): Incident | null {
+export function mapIncidentDtoToDomain(id: string, status: string, payload: Record<string, unknown>): Incident | null {
   const { category, description, reporterId } = payload;
 
   if (typeof category !== 'string' || !VALID_CATEGORIES.includes(category as (typeof VALID_CATEGORIES)[number])) {
@@ -65,7 +65,7 @@ async function attempt(
   }
 }
 
-async function fetchJson(
+export async function fetchJson(
   path: string,
   actorId: string,
   baseUrl: string,
