@@ -1,0 +1,751 @@
+{
+  "schemaVersion": 1,
+  "week": 6,
+  "commitSha": "a9c8d7f2811fdae5d721d0b8df374e915fd3e119",
+  "generatedAt": "2026-10-13T03:02:13.893Z",
+  "entries": [
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "login",
+      "actorId": "technician-1",
+      "role": "technician"
+    },
+    {
+      "event": "login",
+      "actorId": "coordinator-1",
+      "role": "coordinator"
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "login",
+      "actorId": "technician-2",
+      "role": "technician"
+    },
+    {
+      "event": "login",
+      "actorId": "technician-1",
+      "role": "technician"
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "refresh_success",
+      "generation": 1
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 1
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "refresh_success",
+      "generation": 1
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 1
+    },
+    {
+      "event": "refresh_start",
+      "generation": 1
+    },
+    {
+      "event": "session_ended",
+      "reason": "refresh_failed"
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "session_ended",
+      "reason": "refresh_failed"
+    },
+    {
+      "event": "login",
+      "actorId": "coordinator-1",
+      "role": "coordinator"
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "session_ended",
+      "reason": "logout"
+    },
+    {
+      "event": "login",
+      "actorId": "technician-1",
+      "role": "technician"
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "session_ended",
+      "reason": "logout"
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-2",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-3",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-4",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-5",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "refresh_success",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "req-1",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-2",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-2",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-3",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-3",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-4",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-4",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-5",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-5",
+      "generation": 1
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-2",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-3",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-4",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-5",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-6",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-7",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-8",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-9",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-10",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-11",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-12",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-13",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-14",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-15",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-16",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-17",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-18",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-19",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "req-20",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-2",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-3",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-4",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-5",
+      "generation": 0
+    },
+    {
+      "event": "refresh_success",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "req-1",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "req-2",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "req-3",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "req-4",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "req-5",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-6",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-6",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-7",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-7",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-8",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-8",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-9",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-9",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-10",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-10",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-11",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-11",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-12",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-12",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-13",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-13",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-14",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-14",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-15",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-15",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-16",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-16",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-17",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-17",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-18",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-18",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-19",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-19",
+      "generation": 1
+    },
+    {
+      "event": "401",
+      "requestId": "req-20",
+      "generation": 0
+    },
+    {
+      "event": "retry",
+      "requestId": "req-20",
+      "generation": 1
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "request",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "req-1",
+      "generation": 0
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "refresh_success",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "req-1",
+      "generation": 1
+    },
+    {
+      "event": "session_ended",
+      "reason": "unauthorized"
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "request",
+      "requestId": "bad-1",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "bad-2",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "bad-3",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "bad-1",
+      "generation": 0
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "bad-2",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "bad-3",
+      "generation": 0
+    },
+    {
+      "event": "refresh_success",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "bad-1",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "bad-2",
+      "generation": 1
+    },
+    {
+      "event": "retry",
+      "requestId": "bad-3",
+      "generation": 1
+    },
+    {
+      "event": "session_ended",
+      "reason": "unauthorized"
+    },
+    {
+      "event": "session_ended",
+      "reason": "unauthorized"
+    },
+    {
+      "event": "session_ended",
+      "reason": "unauthorized"
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "request",
+      "requestId": "fail-1",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "fail-2",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "fail-3",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "fail-4",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "fail-1",
+      "generation": 0
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "fail-2",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "fail-3",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "fail-4",
+      "generation": 0
+    },
+    {
+      "event": "session_ended",
+      "reason": "refresh_failed"
+    },
+    {
+      "event": "login",
+      "actorId": "reporter-1",
+      "role": "reporter"
+    },
+    {
+      "event": "request",
+      "requestId": "lo-1",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "lo-2",
+      "generation": 0
+    },
+    {
+      "event": "request",
+      "requestId": "lo-3",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "lo-1",
+      "generation": 0
+    },
+    {
+      "event": "refresh_start",
+      "generation": 0
+    },
+    {
+      "event": "session_ended",
+      "reason": "logout"
+    },
+    {
+      "event": "401",
+      "requestId": "lo-2",
+      "generation": 0
+    },
+    {
+      "event": "401",
+      "requestId": "lo-3",
+      "generation": 0
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "week": 4,
+  "commitSha": "502933f4921b63c4a70baf5fc0ba6966e689ada2",
+  "generatedAt": "2026-09-29T02:58:58.271Z",
+  "checks": [
+    {
+      "id": "nt-01-anidado",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-04-negative.test.ts",
+      "evidence": "Amenaza 4 (filtrar datos en registros). email, name y accessToken anidados se ocultan y incidentId se conserva. Observado: {\"incidentId\":\"INC-1\",\"reporter\":{\"email\":\"[REDACTED]\",\"name\":\"[REDACTED]\"},\"auth\":{\"accessToken\":\"[REDACTED]\"}}"
+    },
+    {
+      "id": "nt-02-listas-y-claves",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-04-negative.test.ts",
+      "evidence": "Amenaza 4 (filtrar datos en registros). listas y claves Access-Token/refresh_token/photos/assignmentHistory/internalComments/location. Observado: {\"items\":[{\"Access-Token\":\"[REDACTED]\",\"refresh_token\":\"[REDACTED]\",\"photos\":\"[REDACTED]\",\"status\":\"open\"}],\"assignmentHistory\":\"[REDACTED]\",\"internalComments\":\"[REDACTED]\",\"location\":\"[REDACTED]\"}"
+    },
+    {
+      "id": "nt-03-sin-mutacion",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-04-negative.test.ts",
+      "evidence": "Amenaza 4 (filtrar datos en registros). la entrada original no cambia tras redactar. Observado: entrada idéntica"
+    },
+    {
+      "id": "nt-04-error-guardar",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-04-negative.test.ts",
+      "evidence": "Amenaza 1 (exponer credenciales). el error propagado por saveSessionToken no contiene el token. Observado: No se pudo guardar la sesión de forma segura"
+    },
+    {
+      "id": "nt-05-error-borrar",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-04-negative.test.ts",
+      "evidence": "Amenaza 1 (exponer credenciales). el error propagado por clearSessionToken no contiene el token. Observado: No se pudo cerrar la sesión de forma segura"
+    },
+    {
+      "id": "nt-06-error-leer",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-04-negative.test.ts",
+      "evidence": "Amenaza 1 (exponer credenciales). getSessionToken devuelve null sin detalles ante un fallo. Observado: null"
+    }
+  ]
+}

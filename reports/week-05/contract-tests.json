@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "week": 5,
+  "commitSha": "709b214a68e4f0d8e4fdb3687809eafd8084fcf9",
+  "generatedAt": "2026-10-05T04:28:32.335Z",
+  "checks": [
+    {
+      "id": "ct-01-sobre-valido",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "parseRemoteResource con sobre válido con payload objeto. Esperado ok=true. Observado: {\"ok\":true,\"value\":{\"id\":\"campus-inc-001\",\"version\":2,\"status\":\"assigned\",\"payload\":{\"category\":\"connectivity\",\"description\":\"Falla ficticia\"}}}"
+    },
+    {
+      "id": "ct-02-payload-null-valido",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "parseRemoteResource con payload null válido y campo futuro ignorado. Esperado ok=true. Observado: {\"ok\":true,\"value\":{\"id\":\"r-2\",\"version\":3,\"status\":\"closed\",\"payload\":null}}"
+    },
+    {
+      "id": "ct-03-id-vacio",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "parseRemoteResource con id vacío. Esperado ok=false. Observado: {\"ok\":false,\"error\":\"contract\"}"
+    },
+    {
+      "id": "ct-04-version-string",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "parseRemoteResource con version como texto. Esperado ok=false. Observado: {\"ok\":false,\"error\":\"contract\"}"
+    },
+    {
+      "id": "ct-05-entrada-null",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "parseRemoteResource con entrada null. Esperado ok=false. Observado: {\"ok\":false,\"error\":\"contract\"}"
+    },
+    {
+      "id": "ct-06-detalle-payload-null",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "getIncidentById con el cuerpo real del escenario nullable (HTTP 200, payload null). Esperado ok=true con valor null: no es error y no se inventan datos. Observado: ok=true"
+    },
+    {
+      "id": "ct-07-mapeo-dto-a-dominio",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "listIncidents sobre el cuerpo real de la lista. Esperado: description pasa a title y el dominio no trae description ni location. Observado: {\"id\":\"campus-inc-001\",\"title\":\"Sin conexión en laboratorio ficticio\",\"category\":\"connectivity\",\"status\":\"assigned\",\"reporterId\":\"reporter-1\"}"
+    },
+    {
+      "id": "ct-08-crear-incidencia",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "createIncident contra el cuerpo real de HTTP 201. Esperado: POST /v1/incidents con Idempotency-Key y dominio campus-inc-101 / Prueba ficticia / open. Observado: ok=true, método POST, Idempotency-Key presente"
+    },
+    {
+      "id": "ct-09-crear-payload-null",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Creación con payload null. Una incidencia creada necesita datos, así que se rechaza sin inventarlos. Esperado kind=invalid_payload. Observado: ok=false, error={\"kind\":\"invalid_payload\"}"
+    },
+    {
+      "id": "ct-10-ui-sin-http-directo",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Búsqueda de fetch, XMLHttpRequest y axios en 3 archivos .tsx. Esperado 0 coincidencias. Observado: 0"
+    }
+  ]
+}

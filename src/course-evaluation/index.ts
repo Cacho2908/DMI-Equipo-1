@@ -8,26 +8,82 @@ import type {
 } from './contracts';
 import type { IncidentLocation } from '../campusops/contracts';
 
+import { summarizeSession } from '../application/session/authEvents';
+
 function pending(name: string): never {
   throw new Error(`${name} must be implemented in the assigned week`);
 }
 
-export function redactForTelemetry(_input: unknown): unknown {
-  return pending('redactForTelemetry');
+const SENSITIVE_KEYS = new Set([
+  'authorization',
+  'password',
+  'token',
+  'accesstoken',
+  'refreshtoken',
+  'email',
+  'displayname',
+  'name',
+  'userid',
+  'reporterid',
+  'technicianid',
+  'assignedtechnicianid',
+  'location',
+  'latitude',
+  'longitude',
+  'photos',
+  'evidence',
+  'internalcomments',
+  'assignmenthistory',
+]);
+
+function normalizeKey(key: string): string {
+  return key.toLowerCase().replace(/[_-]/g, '');
 }
 
-export function parseRemoteResource(_input: unknown): ParseResult {
-  return pending('parseRemoteResource');
+export function redactForTelemetry(input: unknown): unknown {
+  if (Array.isArray(input)) {
+    return input.map((item) => redactForTelemetry(item));
+  }
+  if (input !== null && typeof input === 'object') {
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(input as Record<string, unknown>)) {
+      if (SENSITIVE_KEYS.has(normalizeKey(key))) {
+        result[key] = '[REDACTED]';
+      } else {
+        result[key] = redactForTelemetry(value);
+      }
+    }
+    return result;
+  }
+  return input;
 }
 
-export function coordinateRefresh(_events: readonly AuthEvent[]): Readonly<{
+export function parseRemoteResource(input: unknown): ParseResult {
+  if (input === null || typeof input !== 'object') {
+    return { ok: false, error: 'contract' };
+  }
+  const { id, version, status, payload } = input as Record<string, unknown>;
+
+  if (typeof id !== 'string' || id.length === 0) return { ok: false, error: 'contract' };
+  if (typeof version !== 'number' || !Number.isInteger(version) || version < 0) {
+    return { ok: false, error: 'contract' };
+  }
+  if (typeof status !== 'string' || status.length === 0) return { ok: false, error: 'contract' };
+  if (payload !== null && (typeof payload !== 'object' || Array.isArray(payload))) {
+    return { ok: false, error: 'contract' };
+  }
+
+  return { ok: true, value: { id, version, status, payload: payload as JsonObject | null } };
+}
+
+export function coordinateRefresh(events: readonly AuthEvent[]): Readonly<{
   status: 'anonymous' | 'authenticated';
   activeGeneration: number | null;
   refreshCalls: number;
   retriedRequestIds: readonly string[];
   persistedToken: string | null;
 }> {
-  return pending('coordinateRefresh');
+  return summarizeSession(events);
 }
 
 export function resolveSync(

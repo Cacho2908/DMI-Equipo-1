@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "week": 5,
+  "commitSha": "709b214a68e4f0d8e4fdb3687809eafd8084fcf9",
+  "decision": "Separar el DTO del backend del modelo de dominio con una función de mapeo explícita (mapIncidentDtoToDomain en cloudIncidentClient.ts) y representar los fallos como un resultado tipado { ok: false, error: { kind } } con cuatro tipos (invalid_payload, timeout, server_error, network_error) en lugar de lanzar excepciones. parseRemoteResource valida el sobre { id, version, status, payload } (version entera, payload objeto o null); el mapeo valida además category y description antes de crear un Incident y devuelve null si faltan, de modo que el cliente responde invalid_payload y no inventa datos. Un payload null válido se trata como ausencia de detalle: valor null en el detalle, elemento omitido en la lista e invalid_payload al crear. Durante la revisión independiente, la prueba FM-09 detectó que el mapeo original solo hacía un cast de category sin validarla; se corrigió y la prueba pasó de fallar a pasar.",
+  "alternatives": [
+    "Usar el DTO del backend directamente en la interfaz: descartada porque acopla las pantallas a los nombres y la forma del servidor, y un cambio del backend rompería la interfaz.",
+    "Validar solo el sobre y castear el payload al dominio, que era el comportamiento original del cliente: descartada porque la prueba FM-09 mostró que un payload sin category producía un incidente con categoría indefinida.",
+    "Propagar las excepciones de fetch y de JSON hasta la interfaz: descartada porque obliga a cada pantalla a capturarlas y no permite distinguir timeout, error del servidor y payload inválido."
+  ],
+  "tradeoff": "Beneficio: la interfaz solo conoce el tipo Incident, un payload corrupto nunca llega a ella y cada fallo tiene un tipo distinguible y probable sin servidor real. Costo: hay que mantener el mapeo cuando el backend agrega campos, la lista omite en silencio los elementos corruptos sin informar cuántos se perdieron, y server_error agrupa respuestas 4xx y 5xx en un solo tipo.",
+  "requirementIds": ["AC-01", "AC-02", "AC-03", "AC-04", "AC-05"],
+  "verification": [
+    {
+      "command": "npx jest course-tests/public/week-05.test.ts",
+      "result": "5 passed",
+      "evidence": "Frontera del sobre: válido, payload null válido con campo futuro ignorado, id vacío, version como texto y entrada null."
+    },
+    {
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "result": "Antes de corregir el cliente: 19 passed, 1 failed (FM-09). Después: 20 passed.",
+      "evidence": "reports/week-05/contract-tests.json y reports/week-05/failure-matrix.json. FM-09 es un sobre válido cuyo payload no trae category; ahora devuelve invalid_payload."
+    },
+    {
+      "command": "curl.exe con X-Course-Scenario malformed, server_error y slow contra http://127.0.0.1:4310/v1/incidents (npm run backend)",
+      "result": "malformed: HTTP 200 con cuerpo {\"items\": [}. server_error: HTTP 500 con {\"code\":\"controlled_failure\"}. slow: HTTP 200 en 1302 ms medidos con Measure-Command.",
+      "evidence": "Esos cuerpos se reproducen con respuestas simuladas en FM-01, FM-02 y FM-03. Como 1302 ms es menor que el límite de 4000 ms, slow no produce timeout; el timeout se prueba con un servidor simulado que no responde (FM-04)."
+    },
+    {
+      "command": "npm run typecheck y npm run lint",
+      "result": "Sin errores ni avisos tras corregir el archivo de pruebas.",
+      "evidence": "Las primeras corridas marcaron un error de tipos (acceso posiblemente indefinido) y un aviso de estilo en el archivo de pruebas, y se corrigieron."
+    }
+  ]
+}

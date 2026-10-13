@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> anonymous
+
+    anonymous --> authenticating: Iniciar sesión (login)
+    authenticating --> authenticated: Autenticación exitosa
+    authenticating --> anonymous: Falla de autenticación
+
+    authenticated --> refreshing: Token por expirar (coordinateRefresh)
+    refreshing --> authenticated: Refresh exitoso
+    refreshing --> anonymous: Refresh fallido / Expiración de sesión
+    refreshing --> anonymous: logout
+
+    authenticated --> anonymous: Cerrar sesión (logout)
+    authenticated --> anonymous: la solicitud sigue en 401 tras renovar

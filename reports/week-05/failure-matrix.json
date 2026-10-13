@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "week": 5,
+  "commitSha": "709b214a68e4f0d8e4fdb3687809eafd8084fcf9",
+  "generatedAt": "2026-10-05T04:28:32.335Z",
+  "checks": [
+    {
+      "id": "fm-01-malformed",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Escenario malformed (el backend real respondió HTTP 200 con el cuerpo {\"items\": [}). Esperado kind=invalid_payload. Observado: ok=false, error={\"kind\":\"invalid_payload\"}"
+    },
+    {
+      "id": "fm-02-server-error",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Escenario server_error (el backend real respondió HTTP 500 con {\"code\":\"controlled_failure\"}). Esperado kind=server_error con status 500, sin copiar el cuerpo del servidor. Observado: ok=false, error={\"kind\":\"server_error\",\"status\":500}"
+    },
+    {
+      "id": "fm-03-slow-dentro-del-limite",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Respuesta simulada con 1300 ms de retraso (el backend real en el escenario slow tardó 1302 ms medidos con Measure-Command). El límite del cliente es 4000 ms. Esperado ok=true: slow por sí solo no produce timeout. Observado: ok=true"
+    },
+    {
+      "id": "fm-04-timeout",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Servidor simulado que nunca responde; se avanzan 4000 ms. Esperado kind=timeout. Observado: ok=false, error={\"kind\":\"timeout\"}"
+    },
+    {
+      "id": "fm-05-network-error",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "fetch rechaza con TypeError. Esperado kind=network_error. Observado: ok=false, error={\"kind\":\"network_error\"}"
+    },
+    {
+      "id": "fm-06-payload-no-objeto",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Detalle con payload de tipo texto. Esperado kind=invalid_payload. Observado: ok=false, error={\"kind\":\"invalid_payload\"}"
+    },
+    {
+      "id": "fm-07-version-texto",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Detalle con version \"1\" (texto). Esperado kind=invalid_payload. Observado: ok=false, error={\"kind\":\"invalid_payload\"}"
+    },
+    {
+      "id": "fm-08-lista-con-elemento-corrupto",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Lista con 1 elemento válido y 1 con id vacío. Comportamiento declarado: se omite el corrupto y la lista no se rompe. Observado: ok=true, 1 elemento(s)"
+    },
+    {
+      "id": "fm-09-payload-sin-categoria",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Sobre válido pero payload sin category. Esperado kind=invalid_payload (validación de dominio). Observado: ok=false, error={\"kind\":\"invalid_payload\"}"
+    },
+    {
+      "id": "fm-10-crear-server-error",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-05-contract.test.ts",
+      "evidence": "Creación con respuesta HTTP 500. Esperado kind=server_error. Observado: ok=false, error={\"kind\":\"server_error\",\"status\":500}"
+    }
+  ]
+}

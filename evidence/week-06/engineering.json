@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "week": 6,
+  "commitSha": "cddf6e54599c8a5c16d17f08c3f21d8b0ad0998a",
+  "decision": "Una sola renovación compartida entre todas las solicitudes (SessionManager.refreshOnce guarda una única promesa en curso) y un único reintento por solicitud. Antes de enviar se renueva si el token está a 5000 ms de expirar, usando un reloj inyectable. Si la renovación falla, la sesión pasa a anonymous y se borran los tokens.",
+  "alternatives": [
+    "Renovación por solicitud: cada 401 inicia su propio refresh. Con rotación de refresh token, las solicitudes en paralelo reutilizarían el mismo token y se arriesga a invalidar la sesión.",
+    "Renovación preventiva con temporizador en segundo plano: requiere un planificador, renueva aunque no haya actividad y de todos modos hace falta manejar el 401 de tokens revocados."
+  ],
+  "tradeoff": "Beneficio: 20 solicitudes con 401 producen 1 sola renovación y 40 envíos (conc-01-compartida-20), sin bucles. Costo: todas las solicitudes dependen de esa renovación; si falla, todas terminan y la sesión se cierra (conc-04); y una solicitud que recibe 401 también después de renovar cierra la sesión tras un solo reintento (conc-02), aunque el 401 no se debiera a la sesión. Límite del backend de práctica: solo acepta el refresh token course-refresh-0, así que la segunda renovación de una sesión siempre falla; auth-10 lo usa a propósito para probar el refresh obsoleto.",
+  "requirementIds": [
+    "AC-01",
+    "AC-02",
+    "AC-03",
+    "AC-04",
+    "AC-05"
+  ],
+  "verification": [
+    {
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "result": "22 pruebas pasaron de 22 contra el backend real (node course-backend/server.mjs en puerto libre)",
+      "evidence": "reports/week-06/auth-tests.json y reports/week-06/concurrency.json"
+    },
+    {
+      "command": "npx jest course-tests/public/week-06.test.ts",
+      "result": "PASS",
+      "evidence": "salida de jest de la corrida completa del 2026-10-12"
+    }
+  ]
+}

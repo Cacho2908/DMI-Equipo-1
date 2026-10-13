@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "week": 6,
+  "commitSha": "cddf6e54599c8a5c16d17f08c3f21d8b0ad0998a",
+  "generatedAt": "2026-10-13T03:43:26.794Z",
+  "checks": [
+    {
+      "id": "auth-01-login-reporter",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Login real de reporter-1 contra el backend. Esperado: authenticated con rol reporter, tokens guardados, 0 renovaciones. Observado: estado=authenticated, rol=reporter, tokens guardados=true"
+    },
+    {
+      "id": "auth-01-login-technician",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Login real de technician-1 contra el backend. Esperado: authenticated con rol technician, tokens guardados, 0 renovaciones. Observado: estado=authenticated, rol=technician, tokens guardados=true"
+    },
+    {
+      "id": "auth-01-login-coordinator",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Login real de coordinator-1 contra el backend. Esperado: authenticated con rol coordinator, tokens guardados, 0 renovaciones. Observado: estado=authenticated, rol=coordinator, tokens guardados=true"
+    },
+    {
+      "id": "auth-02-login-actor-desconocido",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Login con actor inexistente (el backend real responde 401). Esperado: login_failed, estado anonymous, sin tokens. Observado: código=login_failed, estado=anonymous, tokens guardados=false"
+    },
+    {
+      "id": "auth-03-sin-sesion",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "execute sin login. Esperado: unauthenticated, 0 solicitudes, 0 renovaciones. Observado: código=unauthenticated, solicitudes=0, renovaciones=0"
+    },
+    {
+      "id": "auth-04-401-real",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "GET /v1/incidents sin Authorization y con token inválido. Esperado: 401 en ambos. Observado: 401 y 401"
+    },
+    {
+      "id": "auth-05-403-reportante-asigna",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Reportante intenta la acción assign. Esperado 403. Observado: 403 {\"code\":\"forbidden\"}"
+    },
+    {
+      "id": "auth-06-403-tecnico-ajeno",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "technician-2 intenta start sobre la incidencia de technician-1. Esperado 403. Observado: 403 {\"code\":\"forbidden\"}"
+    },
+    {
+      "id": "auth-07-tecnico-start-si-close-no",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "technician-1: start sobre su incidencia y close (acción de coordinación). Esperado 201 y 403. Observado: 201 y 403"
+    },
+    {
+      "id": "auth-08-antes-del-limite",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Reloj controlado +54999 ms (expira a 60000 ms, margen 5000 ms). Esperado: 200 y 0 renovaciones. Observado: 200 y 0 renovaciones"
+    },
+    {
+      "id": "auth-09-en-el-limite",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Reloj controlado +55000 ms. Esperado: 1 renovación previa, token de renovación rotado, 1 solicitud, 200. Observado: renovaciones=1, rotado=true, solicitudes=1, estado=200"
+    },
+    {
+      "id": "auth-10-refresh-obsoleto",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Segunda renovación con el refresh token ya usado (el backend real devuelve 401). Esperado: refresh_failed, anonymous, sin tokens y sin nuevos intentos. Observado: código=refresh_failed, renovaciones=2, siguiente solicitud=unauthenticated, tokens guardados=false"
+    },
+    {
+      "id": "auth-11-refresh-fallido",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "401 real y renovación rechazada (escenario invalid_refresh). Esperado: refresh_failed, 1 renovación, sin reintento, anonymous, sin tokens. Observado: código=refresh_failed, renovaciones=1, solicitudes=1, tokens guardados=false"
+    },
+    {
+      "id": "auth-12-logout",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Solicitud válida, logout y nueva solicitud. Esperado: sin tokens persistidos, anonymous, unauthenticated, ninguna solicitud tras el logout. Observado: tokens guardados=false, limpiezas=1, código=unauthenticated, solicitudes totales=1, resumen=anonymous"
+    },
+    {
+      "id": "auth-13-logout-durante-refresh",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Logout mientras la renovación sigue pendiente. Esperado: la solicitud falla con session_ended y no queda ningún token. Observado: resultado=session_ended, tokens guardados=false, estado=anonymous"
+    },
+    {
+      "id": "auth-14-tokens-fuera-de-logs",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "Se revisaron 154 entradas de log de sesión y 0 mensajes de consola de todas las pruebas buscando los tokens del backend. Esperado: 0 coincidencias. Observado: 0"
+    }
+  ]
+}

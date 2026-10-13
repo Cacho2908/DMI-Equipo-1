@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "week": 6,
+  "commitSha": "cddf6e54599c8a5c16d17f08c3f21d8b0ad0998a",
+  "generatedAt": "2026-10-13T03:43:26.794Z",
+  "checks": [
+    {
+      "id": "conc-01-compartida-5",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "5 solicitudes simultáneas reciben 401 real. Esperado: 1 renovación compartida, 5 reintentos (1 por solicitud), todas 200. Observado: renovaciones=1, envíos=10, 200=5, reintentadas según el reductor=5, refreshCalls del reductor=1"
+    },
+    {
+      "id": "conc-01-compartida-20",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "20 solicitudes simultáneas reciben 401 real. Esperado: 1 renovación compartida, 20 reintentos (1 por solicitud), todas 200. Observado: renovaciones=1, envíos=40, 200=20, reintentadas según el reductor=20, refreshCalls del reductor=1"
+    },
+    {
+      "id": "conc-02-reintento-limitado",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "El backend responde 401 también tras renovar. Esperado: 1 renovación, exactamente 2 envíos (original + 1 reintento), unauthorized, sesión cerrada. Observado: renovaciones=1, envíos=2, código=unauthorized, tokens guardados=false"
+    },
+    {
+      "id": "conc-03-varias-siempre-invalidas",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "3 solicitudes simultáneas con token inválido incluso tras renovar. Esperado: todas fallan, 1 renovación, no más de 6 envíos. Observado: resultados=unauthorized,unauthorized,unauthorized, renovaciones=1, envíos=6"
+    },
+    {
+      "id": "conc-04-refresh-fallido-concurrente",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "4 solicitudes con 401 y renovación rechazada. Esperado: 1 renovación, 4 envíos (ningún reintento), todas fallan, anonymous. Observado: resultados=refresh_failed, renovaciones=1, envíos=4, tokens guardados=false"
+    },
+    {
+      "id": "conc-05-logout-con-solicitudes-en-vuelo",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "evidence": "3 solicitudes esperan una renovación y se hace logout. Esperado: todas terminan en session_ended, 1 renovación, sin tokens. Observado: resultados=session_ended,session_ended,session_ended, renovaciones=1, tokens guardados=false"
+    }
+  ]
+}
