@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "week": 6,
+  "teamId": "10A-E01",
+  "members": [
+    {
+      "studentId": "3523110714 Fatima Avelino Celis",
+      "commitShas": [
+        "ff16efea4225747dbf1efd6134ee84e95b3f2e61",
+        "0828c1ec6ac64b83c4b3e41931e8e6d732839bd1"
+      ],
+      "files": [
+        "docs/session-state-machine.mmd",
+        "src/application/authorization.ts",
+        "docs/ai-assistance.md"
+      ],
+      "tests": [],
+      "reviews": [
+        "Diseñé el diagrama de la máquina de estados de sesión e implementé la lógica pura de autorización en TypeScript, validando reglas de negocio por rol y visibilidad de incidencias, además de documentar la asistencia de IA."
+      ],
+      "prediction": "El diagrama de estados guiará el desarrollo del núcleo de sesión, mientras que la función de autorización pura permitirá que las pruebas de acceso validen la seguridad sin acoplarse a la interfaz gráfica.",
+      "command": "git rev-parse HEAD",
+      "observedResult": "Creación y confirmación exitosa de los archivos de modelado, autorización y documentación en mi rama personal para la Semana 6.",
+      "explanation": "Aporté el control estricto de permisos (Coordinador, Técnico, Reportante) y el flujo de estados requeridos para el correcto funcionamiento de las sesiones y la seguridad de la aplicación."
+    },
+    {
+      "studentId": "3523110081 Janeth Cabrera Arguelles",
+      "commitShas": [
+        "2e3b2df74cb3b24d9aaaa8584d887d0203811e65",
+        "5caac23290b84530d0a37604504c2826980be9e9"
+      ],
+      "files": [
+        "course-tests/team/week-06-session.test.ts",
+        "reports/week-06/auth-tests.json",
+        "reports/week-06/concurrency.json",
+        "evidence/week-06/engineering.json"
+      ],
+      "tests": [
+        "course-tests/team/week-06-session.test.ts"
+      ],
+      "reviews": [
+        "Revisé el SessionManager de Héctor: refreshOnce comparte una sola promesa de renovación entre solicitudes, execute reintenta una sola vez, y endSession limpia el almacén de tokens. Lo comprobé con pruebas contra el backend real (node course-backend/server.mjs)."
+      ],
+      "prediction": "Esperaba que 20 solicitudes con 401 simultáneo produjeran una sola renovación, que una renovación fallida o un logout dejaran la sesión anónima sin tokens guardados, y que los tokens no aparecieran en logs.",
+      "command": "npx jest course-tests/team/week-06-session.test.ts",
+      "observedResult": "22 pruebas pasaron de 22. 20 solicitudes con 401 produjeron 1 sola renovación y 40 envíos; la renovación fallida y el logout dejaron la sesión anónima sin tokens; no se encontraron tokens en logs ni consola. En la corrida completa de jest, FM-08 de la semana 5 falló (lista con un elemento corrupto); no confirmé la causa.",
+      "explanation": "Escribí y ejecuté las pruebas de equipo de sesión segura contra el backend real, con reloj controlable. Con ellas se generaron auth-tests.json y concurrency.json, y redacté la decisión de ingeniería (renovación compartida con reintento único) a partir de esos resultados."
+    }
+  ]
+}
