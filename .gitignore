@@ -10,4 +10,4 @@ dist/
 *.keystore
 *.p8
 *.p12
-reports/**/generated-*
+reports/**/verify.json
