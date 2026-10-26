@@ -104,6 +104,7 @@ export class SessionManager {
     this.logSink = options.log;
   }
 
+  getSessionRevision(): number { return this.sessionId; }
   getState(): SessionState {
     return this.state;
   }
