@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "week": 8,
+  "commitSha": "bdecfe500d7a1cb684cf095e80d14c8a68618770",
+  "generatedAt": "2026-10-26T23:27:23.835288+00:00",
+  "checks": [
+    {
+      "id": "sqlite-reinicio",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "SQLite real en archivo: cierre/reapertura conserva identidad y nota; separación por actor. Ejecutado con puente Node, no en Android. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "migracion-rollback",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Esquema v1 conserva cola y datos tras falla inyectada; retry llega íntegro a v2. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "confirmacion-atomica",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Falla inyectada al borrar cola revierte también caché y archivo; pendiente permanece. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "conflicto-reasignacion",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Clasificación work conflictiva conserva intención y asignación remota; resolución explícita archiva. HTTP real también comprueba rechazo 403 al técnico reasignado. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "combinacion-deduplicacion",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Contenido JSON anidado, ausencia/null, orden de conflictos y primera identidad sin mutaciones. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "respuesta-perdida",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Primera confirmación HTTP real descartada deliberadamente; reenvío con la misma identidad produce un único evento de historial. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "sesion-concurrencia",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Sincronizaciones comparten envío; cambio de revisión de sesión invalida respuesta tardía sin retirar pendiente. Salida: reports/week-08/hector-check.tap."
+    }
+  ],
+  "executedBy": "Codex, por solicitud de Héctor",
+  "limitations": [
+    "No se ejecutó cierre/reapertura Android ni módulo Expo SQLite nativo; requiere prueba del equipo en dispositivo/emulador.",
+    "Prueba de respuesta perdida descarta la confirmación; no mide un timeout físico de red."
+  ]
+}
