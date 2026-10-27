@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 8,
-  "commitSha": "2e2c9a9b07ed1e441c54207a3b4ce676e3237be0",
+  "commitSha": "0e48a6b6e353fc03f5e6036fbcc963b40234c164",
   "decision": "Persistir antes de enviar; usar UUID estable por intención y cuerpo inmutable, confirmación transaccional, comparación de tres versiones y resolución explícita conservando intención. No forzar cambios tras reasignación.",
   "alternatives": [
     "Cola sólo en memoria y sobrescritura de último escritor: sencilla pero pierde trabajo al reiniciar y puede imponer una asignación obsoleta.",
@@ -25,6 +25,6 @@
       "evidence": "reports/week-08/android-manual.md"
     }
   ],
-  "verifiedTree": "ac8989058ffe2c16d223699c8fd258074c4ac42f",
-  "verificationNote": "La integración final incluye historial completo en CI y orden de imports de pruebas; no se modificó la lógica de producción comprobada."
+  "verifiedTree": "e45097d854d549fb05a4bc38b7158a97595447d7",
+  "verificationNote": "Version tecnica integrada en main mediante PR; cierre con evidencia real y limitacion de arranque offline de Expo Go declarada."
 }
