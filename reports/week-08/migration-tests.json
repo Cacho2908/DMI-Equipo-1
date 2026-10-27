@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 8,
-  "commitSha": "8d3c821fe4025bd86a0a2e198e7f2663a3ff70d9",
+  "commitSha": "2e2c9a9b07ed1e441c54207a3b4ce676e3237be0",
   "generatedAt": "2026-10-27T04:09:43.257781+00:00",
   "checks": [
     {
@@ -224,15 +224,45 @@
       "scenarioType": "failure",
       "command": "npm run test:week08",
       "evidence": "Una falla al retirar la cola revierte también caché y archivo. Ejecutado por Codex mediante tests/unit/sqlite-queue.test.ts y SQLite real en disco."
+    },
+    {
+      "id": "android-manual-recuperacion",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "Prueba manual Android de Hector y GET del servidor; ver reports/week-08/android-manual.md",
+      "evidence": "Hector recupero pendiente y nota tras cerrar/reabrir Expo Go y reconectar para acceder."
+    },
+    {
+      "id": "android-manual-reasignacion",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "Prueba manual Android de Hector y GET del servidor; ver reports/week-08/android-manual.md",
+      "evidence": "El start de technician-1 quedo bloqueado y conservado; servidor mantuvo version 2 y technician-2."
+    },
+    {
+      "id": "android-manual-confirmacion",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "Prueba manual Android de Hector y GET del servidor; ver reports/week-08/android-manual.md",
+      "evidence": "Start de technician-2 confirmado en version 3, UUID 7e425552-f525-4526-8486-aba6b8496e2e."
+    },
+    {
+      "id": "android-manual-otra-sincronizacion",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "Prueba manual Android de Hector y GET del servidor; ver reports/week-08/android-manual.md",
+      "evidence": "Otro Sincronizar sin nueva accion mantuvo version 3 y un solo start en historial."
     }
   ],
-  "executedBy": "Codex, por solicitud de Héctor",
+  "executedBy": "Automaticas: Codex. Android manual: Hector, documentado a partir de sus capturas y salidas.",
   "limitations": [
-    "No se ejecutó cierre/reapertura Android ni módulo Expo SQLite nativo; requiere prueba del equipo en dispositivo/emulador.",
-    "Prueba de respuesta perdida descarta la confirmación; no mide un timeout físico de red."
+    "Expo Go requirio reconexion para cargar el proyecto y autenticarse.",
+    "No se comparo visualmente el UUID antes y despues del reinicio Android.",
+    "La segunda sincronizacion vacia no acredita reenvio manual del mismo POST. La prueba automatica HTTP cubre esa condicion.",
+    "La nota adjunta es local, no un comentario enviado al servidor."
   ],
   "remainingVerification": [
-    "Cierre y reapertura de Android con cambio pendiente, confirmado pendiente por Héctor. Emulador no arranca: x86_64 emulation currently requires hardware acceleration."
+    "Arranque completamente sin red independiente de Expo CLI: no comprobado."
   ],
   "verifiedTree": "ac8989058ffe2c16d223699c8fd258074c4ac42f",
   "verificationNote": "La integración final incluye historial completo en CI y orden de imports de pruebas; no se modificó la lógica de producción comprobada."
