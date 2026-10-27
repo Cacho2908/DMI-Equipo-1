@@ -8,6 +8,7 @@ import datetime as dt
 import json
 import re
 import subprocess
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -24,7 +25,9 @@ SECRET_PATTERNS = {
 
 def run(repo: Path, command: list[str], timeout: int = 300) -> tuple[bool, str]:
     try:
-        result = subprocess.run(command, cwd=repo, text=True, capture_output=True, timeout=timeout)
+        # Resolve npm.cmd explicitly on Windows; preserve the original checks and exit codes.
+        executable = shutil.which(command[0]) or command[0]
+        result = subprocess.run([executable, *command[1:]], cwd=repo, text=True, capture_output=True, timeout=timeout)
     except (OSError, subprocess.TimeoutExpired) as exc:
         return False, str(exc)
     tail = ((result.stdout or "") + "\n" + (result.stderr or ""))[-3000:]

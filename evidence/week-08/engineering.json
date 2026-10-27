@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "week": 8,
+  "commitSha": "bdecfe500d7a1cb684cf095e80d14c8a68618770",
+  "decision": "Persistir antes de enviar; usar UUID estable por intención y cuerpo inmutable, confirmación transaccional, comparación de tres versiones y resolución explícita conservando intención. No forzar cambios tras reasignación.",
+  "alternatives": [
+    "Cola sólo en memoria y sobrescritura de último escritor: sencilla pero pierde trabajo al reiniciar y puede imponer una asignación obsoleta.",
+    "Cola SQLite con transacciones, identidad estable y conflicto explícito: conserva integridad y trazabilidad; añade dependencia nativa y revisión de conflictos."
+  ],
+  "tradeoff": "Se prioriza conservar intención, asignación vigente y efecto único a cambio de esquema local, más estados, pruebas nativas e intervención para resolver conflictos. No hay rebase automático de solicitudes enviadas.",
+  "requirementIds": [
+    "AC-02",
+    "AC-03",
+    "AC-04"
+  ],
+  "verification": [
+    {
+      "command": "node --test tools/week08-hector-check.cjs",
+      "result": "13 de 13 pruebas pasaron con SQLite real en disco mediante puente Node y backend HTTP real.",
+      "evidence": "reports/week-08/hector-check.tap"
+    },
+    {
+      "command": "npm run test:week08",
+      "result": "13 pruebas de integración Node y 5 pruebas Jest (2 UI, 3 públicas) pasaron.",
+      "evidence": "tools/week08-hector-check.cjs y course-tests/team/week-08-ui.test.tsx; ejecución registrada en esta sesión."
+    }
+  ]
+}

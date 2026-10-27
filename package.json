@@ -21,11 +21,14 @@
     "bundle:release": "expo export --platform android --output-dir dist/export",
     "native:generate": "expo prebuild --platform android --no-install",
     "package:android:ci": "npm run native:generate && ./android/gradlew -p android assembleDebug",
-    "package:android": "npm run native:generate && ./android/gradlew -p android assembleRelease"
+    "package:android": "npm run native:generate && ./android/gradlew -p android assembleRelease",
+    "test:week08": "node --test tools/week08-hector-check.cjs && jest --no-watchman --cacheDirectory .jest-cache --ci --runInBand course-tests/team/week-08-ui.test.tsx course-tests/public/week-08.test.ts"
   },
   "dependencies": {
     "expo": "~57.0.9",
+    "expo-crypto": "~57.0.2",
     "expo-secure-store": "~57.0.4",
+    "expo-sqlite": "~57.0.1",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
     "react-native": "0.86.2"

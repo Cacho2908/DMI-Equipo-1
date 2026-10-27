@@ -16,3 +16,5 @@ Todo el código e información generados mediante asistencia de IA han sido veri
 
    `authEvents.ts`, `sessionManager.ts`, los adaptadores de infraestructura, el cliente cloud, las acciones sobre incidencias y `App.tsx` se redactaron con ayuda de Claude (Anthropic) y fueron revisados y probados por Héctor.
    Verificación: compilación estricta (`tsc`), lint, prueba pública de la Semana 6, smoke test, pruebas de equipo y las pruebas de Janeth contra el backend del curso; sus resultados quedan en `reports/week-06/`.
+## Semana 8 — asistencia de Codex solicitada por Héctor
+Codex diseñó e implementó coordinador de sincronización, gateway HTTP, interfaz y contratos; agregó adaptadores de apoyo SQLite y combinación para probar la integración. También redactó documentación y ejecutó comprobaciones automáticas. Estas ejecuciones no se presentan como pruebas personales de Héctor ni aportaciones de Fátima o Janeth. La revisión humana, ejecución Android y evidencias propias del equipo deben completarse antes de la entrega.
