@@ -6,7 +6,7 @@
     {
   "studentId": "3523110714 Fatima Avelino Celis",
   "commitShas": [
-    ""
+    "18eb93b7266cfe4d9d34e288161f8b4aece4a149"
   ],
   "files": [
     "src/infrastructure/persistence/sqliteAdapter.ts",
