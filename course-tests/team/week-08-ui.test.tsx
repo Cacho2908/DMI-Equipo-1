@@ -1,10 +1,12 @@
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import App from '../../App';
 
-// El primer render de React Native puede cargar módulos nativos simulados en frío.
-jest.setTimeout(30000);
 import type { PendingOperation, OfflineStore } from '../../src/domain/offline';
 import type { IncidentSnapshot } from '../../src/domain/incidentActions';
+
+// El primer render de React Native puede cargar módulos nativos simulados en frío.
+jest.setTimeout(30000);
+
 
 const mockSnapshot: IncidentSnapshot = { id: 'campus-inc-001', version: 1, title: 'Falla ficticia', category: 'electrical', reporterId: 'reporter-1', assignedTechnicianId: 'technician-1', status: 'assigned' };
 let mockOperations: PendingOperation[] = [];
