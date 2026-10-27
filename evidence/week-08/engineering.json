@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 8,
-  "commitSha": "dff7d342e70f1142a4fc524b4d17a94010767cf3",
+  "commitSha": "8d3c821fe4025bd86a0a2e198e7f2663a3ff70d9",
   "decision": "Persistir antes de enviar; usar UUID estable por intención y cuerpo inmutable, confirmación transaccional, comparación de tres versiones y resolución explícita conservando intención. No forzar cambios tras reasignación.",
   "alternatives": [
     "Cola sólo en memoria y sobrescritura de último escritor: sencilla pero pierde trabajo al reiniciar y puede imponer una asignación obsoleta.",
@@ -20,6 +20,6 @@
       "evidence": "reports/week-08/migration-tests.json; logs de integración final. La prueba Android sigue pendiente."
     }
   ],
-  "verifiedTree": "3f4998efeca3dc0e217c6897af119fe59bb02f9d",
-  "verificationNote": "El commit de integración y el commit comprobado 7593018b05bb4e588422e6dc71e4250e9432c93b tienen exactamente el mismo árbol Git; el merge no cambió archivos."
+  "verifiedTree": "ac8989058ffe2c16d223699c8fd258074c4ac42f",
+  "verificationNote": "La integración final incluye historial completo en CI y orden de imports de pruebas; no se modificó la lógica de producción comprobada."
 }
