@@ -1,3 +1,4 @@
+import { migrateDatabase } from './sqliteAdapter';
 import type { SQLiteDatabase } from 'expo-sqlite';
 import type { OfflineStore, PendingOperation } from '../../domain/offline';
 import type { IncidentSnapshot } from '../../domain/incidentActions';
@@ -10,19 +11,7 @@ export function createSqliteOfflineStore(open: () => Promise<SQLiteDatabase> = a
   async function database(): Promise<SQLiteDatabase> {
     if (!ready) ready = (async () => {
       const db = await open();
-      await db.withExclusiveTransactionAsync(async tx => {
-        const version = (await tx.getFirstAsync<{ user_version: number }>('PRAGMA user_version'))?.user_version ?? 0;
-        if (version > 2) throw new Error('unsupported_schema');
-        if (version < 1) await tx.execAsync(`CREATE TABLE incidents(actor_id TEXT NOT NULL,id TEXT NOT NULL,data TEXT NOT NULL,PRIMARY KEY(actor_id,id));
-          CREATE TABLE pending_operations(operation_id TEXT PRIMARY KEY NOT NULL,actor_id TEXT NOT NULL,incident_id TEXT NOT NULL,data TEXT NOT NULL);
-          PRAGMA user_version=1;`);
-        if (version < 2) {
-          await tx.execAsync(`CREATE TABLE operation_archive(operation_id TEXT PRIMARY KEY NOT NULL,actor_id TEXT NOT NULL,data TEXT NOT NULL,reason TEXT NOT NULL);
-            CREATE INDEX pending_actor ON pending_operations(actor_id);`);
-          migrationHook?.();
-          await tx.execAsync('PRAGMA user_version=2;');
-        }
-      });
+      await migrateDatabase(db, migrationHook);
       return db;
     })().catch(error => { ready = null; throw error; });
     return ready;

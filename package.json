@@ -22,7 +22,7 @@
     "native:generate": "expo prebuild --platform android --no-install",
     "package:android:ci": "npm run native:generate && ./android/gradlew -p android assembleDebug",
     "package:android": "npm run native:generate && ./android/gradlew -p android assembleRelease",
-    "test:week08": "node --test tools/week08-hector-check.cjs && jest --no-watchman --cacheDirectory .jest-cache --ci --runInBand course-tests/team/week-08-ui.test.tsx course-tests/public/week-08.test.ts"
+    "test:week08": "node --test tools/week08-hector-check.cjs && jest --no-watchman --cacheDirectory .jest-cache --ci --runInBand course-tests/team/week-08-ui.test.tsx course-tests/public/week-08.test.ts course-tests/team/week-08-sync.test.ts tests/unit/sqlite-queue.test.ts"
   },
   "dependencies": {
     "expo": "~57.0.9",

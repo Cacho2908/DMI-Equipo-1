@@ -1,5 +1,8 @@
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import App from '../../App';
+
+// El primer render de React Native puede cargar módulos nativos simulados en frío.
+jest.setTimeout(30000);
 import type { PendingOperation, OfflineStore } from '../../src/domain/offline';
 import type { IncidentSnapshot } from '../../src/domain/incidentActions';
 
@@ -35,8 +38,8 @@ async function login(view: Awaited<ReturnType<typeof render>>) {
 test('UI queues a local action without sending, shows note and explicitly synchronizes', async () => {
   const view = await render(<App />);
   await login(view);
-  await fireEvent.press(view.getByText('Falla ficticia'));
-  await fireEvent.changeText(view.getByLabelText('Nota o comentario'), 'Nota recuperable');
+  await fireEvent.press(view.getByTestId('incident-campus-inc-001'));
+  await fireEvent.changeText(await view.findByLabelText('Nota o comentario'), 'Nota recuperable');
   await fireEvent.press(view.getByText('Iniciar atención'));
   await waitFor(() => expect(view.getByText('Nota local conservada: Nota recuperable')).toBeTruthy());
   expect(mockSend).not.toHaveBeenCalled();
@@ -48,8 +51,8 @@ test('UI queues a local action without sending, shows note and explicitly synchr
 test('UI reload recovers existing pending and logout hides private note', async () => {
   const first = await render(<App />);
   await login(first);
-  await fireEvent.press(first.getByText('Falla ficticia'));
-  await fireEvent.changeText(first.getByLabelText('Nota o comentario'), 'Privada de la sesión');
+  await fireEvent.press(first.getByTestId('incident-campus-inc-001'));
+  await fireEvent.changeText(await first.findByLabelText('Nota o comentario'), 'Privada de la sesión');
   await fireEvent.press(first.getByText('Iniciar atención'));
   await waitFor(() => expect(mockOperations.length).toBe(1));
   await first.unmount();
@@ -60,4 +63,3 @@ test('UI reload recovers existing pending and logout hides private note', async 
   await waitFor(() => expect(reopened.queryByText('Nota local conservada: Privada de la sesión')).toBeNull());
   expect(mockOperations.length).toBe(1);
 });
-

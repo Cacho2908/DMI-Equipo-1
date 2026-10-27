@@ -32,3 +32,6 @@ La prueba FM-08 de course-tests/team/week-05-contract.test.ts espera omitir elem
 
 ## Compatibilidad de comprobaciones en Windows
 El evaluador suministrado no encontraba npm mediante subprocess en esta instalación. Se agregó resolución con shutil.which antes de ejecutar el mismo comando. Se conservan argumentos, checks y códigos de error; se comprobó explícitamente que un proceso con salida 17 sigue fallando. Usar make PYTHON=python verify-week-08 si python3 es el alias de Store.
+
+## Revisión final del equipo
+Se integraron con merge commits los cambios de Janeth (pruebas y política) y Fátima (primer esquema y evidencia). Se corrigió la excepción permanente y la base paralela de Fátima, y se conectó migrateDatabase con la cola real. La falta de Android sigue pendiente, confirmada por Héctor. No se debe declarar esta ejecución nativa como pasada ni cerrar la entrega sólo porque los validadores estructurales pasen.

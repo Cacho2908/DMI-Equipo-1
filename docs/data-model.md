@@ -1,5 +1,5 @@
 # Modelo local de semana 8
-Implementación de apoyo a la integración de Héctor; Fátima debe revisar y ampliar sus pruebas nativas.
+Trabajo integrado de Fátima y Héctor. Se conservaron sus commits y se unificó la migración con el almacenamiento utilizado por la app.
 ## Almacenamiento
 SQLite mediante expo-sqlite, instalado con el rango compatible publicado en bundledNativeModules.json del Expo 57 instalado. Archivo campusops-offline.db. Tokens continúan en SecureStore; no se copian a SQLite. Datos exclusivamente ficticios.
 incidents: clave compuesta actor_id,id y data JSON con snapshot remoto.
@@ -16,3 +16,6 @@ Esto NO acredita todavía el módulo Expo SQLite ni cierre/reapertura de Android
 ## Aislamiento y límites
 Lecturas y escrituras se filtran por actor autenticado. Logout oculta datos y cambia la revisión de sesión, sin borrar pendientes. No se ofrece acceso offline tras un reinicio sin autenticación válida. Las notas adjuntas a una acción son anotaciones locales archivadas; para enviarlas usar comentario pendiente. Los IDs de evidencia son recursos sintéticos, no archivos fotográficos ni prueba de carga.
 
+
+## Integración final del equipo
+La migración reside en src/infrastructure/persistence/sqliteAdapter.ts; sqliteOfflineStore.ts la invoca al abrir campusops-offline.db. Se retiró la excepción permanente del primer adaptador de Fátima. Ahora el fallo se inyecta sólo desde pruebas y se propaga, sin presentarlo como una inicialización exitosa. La app no crea una segunda base campusops.db. El esquema v1/v2 documentado arriba corresponde al adaptador conectado, con los metadatos de operación serializados en data. Las cuatro pruebas tests/unit/sqlite-queue.test.ts ejecutan el adaptador real contra SQLite en disco mediante el comprobador Node; no sustituyen Android nativo.

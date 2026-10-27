@@ -18,3 +18,6 @@ Todo el código e información generados mediante asistencia de IA han sido veri
    Verificación: compilación estricta (`tsc`), lint, prueba pública de la Semana 6, smoke test, pruebas de equipo y las pruebas de Janeth contra el backend del curso; sus resultados quedan en `reports/week-06/`.
 ## Semana 8 — asistencia de Codex solicitada por Héctor
 Codex diseñó e implementó coordinador de sincronización, gateway HTTP, interfaz y contratos; agregó adaptadores de apoyo SQLite y combinación para probar la integración. También redactó documentación y ejecutó comprobaciones automáticas. Estas ejecuciones no se presentan como pruebas personales de Héctor ni aportaciones de Fátima o Janeth. La revisión humana, ejecución Android y evidencias propias del equipo deben completarse antes de la entrega.
+
+## Revisión e integración final de semana 8
+Codex integró los commits de Fátima y Janeth con los de Héctor, revisó las pruebas de Janeth y corrigió la migración siempre fallida del primer adaptador de Fátima. Unificó ambas bases y sustituyó pruebas de igualdad de fixtures por pruebas ejecutables de persistencia. Las corridas finales las ejecutó Codex, sin atribuirlas como ejecuciones personales a las estudiantes. El emulador no arrancó por falta de aceleración de hardware; el usuario confirmó que el equipo aún no realizó la prueba Android.
