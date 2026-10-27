@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 8,
-  "commitSha": "8d3c821fe4025bd86a0a2e198e7f2663a3ff70d9",
+  "commitSha": "2e2c9a9b07ed1e441c54207a3b4ce676e3237be0",
   "decision": "Persistir antes de enviar; usar UUID estable por intención y cuerpo inmutable, confirmación transaccional, comparación de tres versiones y resolución explícita conservando intención. No forzar cambios tras reasignación.",
   "alternatives": [
     "Cola sólo en memoria y sobrescritura de último escritor: sencilla pero pierde trabajo al reiniciar y puede imponer una asignación obsoleta.",
@@ -17,7 +17,12 @@
     {
       "command": "npm run test:week08",
       "result": "Pasaron 13 pruebas Node y 24 Jest: públicas, UI, 15 pruebas de Janeth y 4 pruebas de persistencia integradas.",
-      "evidence": "reports/week-08/migration-tests.json; logs de integración final. La prueba Android sigue pendiente."
+      "evidence": "reports/week-08/migration-tests.json; limites Android en reports/week-08/android-manual.md."
+    },
+    {
+      "command": "Prueba Android manual de Hector",
+      "result": "Recuperacion tras reconectar, rechazo conservado por reasignacion y envio autorizado a version 3 sin otro efecto al volver a sincronizar.",
+      "evidence": "reports/week-08/android-manual.md"
     }
   ],
   "verifiedTree": "ac8989058ffe2c16d223699c8fd258074c4ac42f",

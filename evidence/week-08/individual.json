@@ -58,18 +58,19 @@
         "tools/week08-hector-check.cjs"
       ],
       "tests": [
-        "Codex ejecutó npm run test:week08, make feedback y backend:self-test durante esta intervención. Héctor debe realizar revisión y prueba Android propias antes de presentarlas como personales."
+        "Codex ejecutó npm run test:week08, make feedback y backend:self-test durante esta intervención. Héctor debe realizar revisión y prueba Android propias antes de presentarlas como personales.",
+        "Prueba Android manual ejecutada por Hector, detallada en reports/week-08/android-manual.md."
       ],
       "reviews": [],
       "prediction": "El diseño prevé conservar la operación después de reiniciar, repetir el mismo cuerpo sin duplicar efecto y mantener pendientes ante conflicto o cambio de sesión.",
       "command": "npm run test:week08",
-      "observedResult": "Codex observó 13/13 casos Node y 5/5 Jest pasados; no hubo ejecución Android.",
-      "explanation": "Integración de cola persistente, cliente idempotente y UI con asistencia material de Codex. Incluye adaptadores de apoyo para revisar con Fátima y Janeth, sin atribuirles contribuciones todavía inexistentes."
+      "observedResult": "Codex comprobo 13 pruebas Node y 24 Jest. Hector recupero el pendiente y la nota en Android despues de reconectar; el start del tecnico reasignado quedo bloqueado sin cambiar version 2; technician-2 sincronizo a version 3. Otra sincronizacion mantuvo version 3 y un solo start. Expo Go necesito red para cargar el proyecto.",
+      "explanation": "Integracion de coordinador, gateway y UI con asistencia de Codex. Las pruebas automaticas las ejecuto Codex; la prueba Android posterior la ejecuto Hector. Se documentan por separado persistencia, autorizacion, confirmacion remota y la dependencia de Expo Go para cargar el proyecto."
     }
   ],
   "integrationNotes": [
     "Aportaciones personales según los bloques suministrados y commits originales conservados.",
     "Codex ejecutó las verificaciones finales. La integración corrigió el fallo permanente del primer adaptador de Fátima y reemplazó sus comparaciones de fixtures por pruebas del almacenamiento real.",
-    "El usuario confirmó que aún falta la prueba Android. No se declara realizada."
+    "Hector realizo la prueba Android posteriormente; necesito reconectar para cargar el proyecto. No se declara arranque totalmente offline."
   ]
 }
