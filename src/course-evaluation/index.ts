@@ -4,7 +4,6 @@ import type {
   ParseResult,
   PermissionEvent,
   RemoteResponse,
-  SyncRecord,
 } from './contracts';
 import type { IncidentLocation } from '../campusops/contracts';
 
@@ -86,19 +85,7 @@ export function coordinateRefresh(events: readonly AuthEvent[]): Readonly<{
   return summarizeSession(events);
 }
 
-export function resolveSync(
-  _base: SyncRecord,
-  _local: SyncRecord,
-  _remote: SyncRecord,
-): Readonly<{ kind: 'merged'; fields: JsonObject } | { kind: 'conflict'; fields: readonly string[] }> {
-  return pending('resolveSync');
-}
-
-export function deduplicateOperations<T extends Readonly<{ operationId: string }>>(
-  _operations: readonly T[],
-): readonly T[] {
-  return pending('deduplicateOperations');
-}
+export { resolveSync, deduplicateOperations } from '../domain/sync/resolveSync';
 
 export function planRetry(_input: Readonly<{
   method: 'GET' | 'POST';

@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "week": 8,
+  "teamId": "10A-E01",
+  "members": [
+    {
+      "studentId": "3523110714 Fatima Avelino Celis",
+      "commitShas": [
+        "18eb93b7266cfe4d9d34e288161f8b4aece4a149"
+      ],
+      "files": [
+        "src/infrastructure/persistence/sqliteAdapter.ts",
+        "docs/data-model.md",
+        "tests/unit/sqlite-queue.test.ts"
+      ],
+      "tests": [
+        "tests/unit/sqlite-queue.test.ts"
+      ],
+      "reviews": [
+        "Implementé el adaptador de persistencia con expo-sqlite, incorporando control de versiones mediante PRAGMA user_version, migración de esquemas en transacciones seguras y pruebas unitarias para la validación de la cola de operaciones."
+      ],
+      "prediction": "El uso de transacciones en SQLite y el control de versiones garantizarán la integridad de los datos locales y la correcta recuperación ante fallos durante las migraciones de esquema.",
+      "command": "npx jest tests/unit/sqlite-queue.test.ts",
+      "observedResult": "Creación correcta del adaptador, estructuración de las tablas (incidents, pending_operations, operation_archive) y documentación del modelo de datos validada para el equipo.",
+      "explanation": "Aporté la capa de infraestructura para el almacenamiento local persistente, asegurando que el caché y la cola de operaciones operen de forma aislada por usuario y con reglas estrictas de idempotencia."
+    },
+    {
+      "studentId": "3523110081 Janeth Cabrera Arguelles",
+      "commitShas": [
+        "4260d9e503113dc1070de362ba9f5181afc273bf",
+        "d0df42d7ad3e6a7248e24537912728771ad61aa1"
+      ],
+      "files": [
+        "course-tests/team/week-08-sync.test.ts",
+        "docs/sync-policy.md"
+      ],
+      "tests": [
+        "npx jest course-tests/team/week-08-sync.test.ts"
+      ],
+      "reviews": [
+        "Revisé src/domain/sync/resolveSync.ts de Héctor (resolveSync, equalJson y deduplicateOperations), tracé las tres pruebas públicas contra el código y corrí typecheck, lint y las pruebas públicas de la semana 8 sobre su rama."
+      ],
+      "prediction": "Esperaba, leyendo el código, que resolveSync cumpliera los casos publicados y que los puntos más delicados fueran distinguir propiedad ausente de null, el orden de las claves frente al de los arreglos y no mutar las entradas.",
+      "command": "npx jest course-tests/team/week-08-sync.test.ts --verbose",
+      "observedResult": "Pasaron las 15 pruebas propias (solo local, solo remoto, independientes, mismo contenido, mismo campo, conflictos ordenados, orden de claves, work inicio contra reasignación, ausente contra null, arreglos, sin mutación, identidad distinta y deduplicación) y las 3 públicas. No encontré fallos en la lógica de combinación.",
+      "explanation": "Escribí pruebas que ejercitan resolveSync y deduplicateOperations con los casos de la guía, incluida la reasignación conflictiva, y documenté en docs/sync-policy.md las reglas de combinación y conflicto con ejemplos tomados de esas pruebas, junto con sus límites."
+    },
+    {
+      "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
+      "commitShas": [
+        "bdecfe500d7a1cb684cf095e80d14c8a68618770"
+      ],
+      "files": [
+        "src/application/sync/offlineSync.ts",
+        "src/infrastructure/incidents/offlineSyncGateway.ts",
+        "App.tsx",
+        "course-tests/team/week-08-ui.test.tsx",
+        "tools/week08-hector-check.cjs"
+      ],
+      "tests": [
+        "Codex ejecutó npm run test:week08, make feedback y backend:self-test durante esta intervención. Héctor debe realizar revisión y prueba Android propias antes de presentarlas como personales.",
+        "Prueba Android manual ejecutada por Hector, detallada en reports/week-08/android-manual.md."
+      ],
+      "reviews": [],
+      "prediction": "El diseño prevé conservar la operación después de reiniciar, repetir el mismo cuerpo sin duplicar efecto y mantener pendientes ante conflicto o cambio de sesión.",
+      "command": "npm run test:week08",
+      "observedResult": "Codex comprobo 13 pruebas Node y 24 Jest. Hector recupero el pendiente y la nota en Android despues de reconectar; el start del tecnico reasignado quedo bloqueado sin cambiar version 2; technician-2 sincronizo a version 3. Otra sincronizacion mantuvo version 3 y un solo start. Expo Go necesito red para cargar el proyecto.",
+      "explanation": "Integracion de coordinador, gateway y UI con asistencia de Codex. Las pruebas automaticas las ejecuto Codex; la prueba Android posterior la ejecuto Hector. Se documentan por separado persistencia, autorizacion, confirmacion remota y la dependencia de Expo Go para cargar el proyecto."
+    }
+  ],
+  "integrationNotes": [
+    "Aportaciones personales según los bloques suministrados y commits originales conservados.",
+    "Codex ejecutó las verificaciones finales. La integración corrigió el fallo permanente del primer adaptador de Fátima y reemplazó sus comparaciones de fixtures por pruebas del almacenamiento real.",
+    "Hector realizo la prueba Android posteriormente; necesito reconectar para cargar el proyecto. No se declara arranque totalmente offline."
+  ]
+}

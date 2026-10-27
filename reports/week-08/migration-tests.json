@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "week": 8,
+  "commitSha": "2e2c9a9b07ed1e441c54207a3b4ce676e3237be0",
+  "generatedAt": "2026-10-27T04:09:43.257781+00:00",
+  "checks": [
+    {
+      "id": "sqlite-reinicio",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "SQLite real en archivo: cierre/reapertura conserva identidad y nota; separación por actor. Ejecutado con puente Node, no en Android. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "migracion-rollback",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Esquema v1 conserva cola y datos tras falla inyectada; retry llega íntegro a v2. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "confirmacion-atomica",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Falla inyectada al borrar cola revierte también caché y archivo; pendiente permanece. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "conflicto-reasignacion",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Clasificación work conflictiva conserva intención y asignación remota; resolución explícita archiva. HTTP real también comprueba rechazo 403 al técnico reasignado. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "combinacion-deduplicacion",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Contenido JSON anidado, ausencia/null, orden de conflictos y primera identidad sin mutaciones. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "respuesta-perdida",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Primera confirmación HTTP real descartada deliberadamente; reenvío con la misma identidad produce un único evento de historial. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "sesion-concurrencia",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week08-hector-check.cjs",
+      "evidence": "Sincronizaciones comparten envío; cambio de revisión de sesión invalida respuesta tardía sin retirar pendiente. Salida: reports/week-08/hector-check.tap."
+    },
+    {
+      "id": "sy-01-solo-local",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npm run test:week08",
+      "evidence": "Solo cambió local: se conserva el cambio local. Esperado: {\"kind\":\"merged\",\"fields\":{\"priority\":1,\"title\":\"Local\"}}. Observado: {\"kind\":\"merged\",\"fields\":{\"priority\":1,\"title\":\"Local\"}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-02-solo-remoto",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npm run test:week08",
+      "evidence": "Solo cambió remoto: se conserva el cambio remoto. Esperado: {\"kind\":\"merged\",\"fields\":{\"priority\":1,\"title\":\"Remote\"}}. Observado: {\"kind\":\"merged\",\"fields\":{\"priority\":1,\"title\":\"Remote\"}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-03-independientes",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npm run test:week08",
+      "evidence": "Campos distintos: se combinan ambos cambios. Esperado: {\"kind\":\"merged\",\"fields\":{\"priority\":2,\"title\":\"Local\"}}. Observado: {\"kind\":\"merged\",\"fields\":{\"priority\":2,\"title\":\"Local\"}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-04-mismo-contenido",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "Mismo campo con el mismo contenido en ambos lados: no hay conflicto. Esperado: {\"kind\":\"merged\",\"fields\":{\"title\":\"Igual\"}}. Observado: {\"kind\":\"merged\",\"fields\":{\"title\":\"Igual\"}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-05-mismo-campo",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npm run test:week08",
+      "evidence": "Mismo campo con contenido distinto: se declara conflicto. Esperado: {\"kind\":\"conflict\",\"fields\":[\"title\"]}. Observado: {\"kind\":\"conflict\",\"fields\":[\"title\"]}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-06-conflictos-ordenados",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npm run test:week08",
+      "evidence": "Dos campos en conflicto se reportan ordenados por nombre. Esperado: {\"kind\":\"conflict\",\"fields\":[\"alpha\",\"zeta\"]}. Observado: {\"kind\":\"conflict\",\"fields\":[\"alpha\",\"zeta\"]}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-07-orden-de-claves",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "Mismo contenido con claves en otro orden: no hay conflicto y se combina. Esperado: {\"kind\":\"merged\",\"fields\":{\"priority\":2,\"work\":{\"assignedTechnicianId\":\"technician-1\",\"status\":\"assigned\"}}}. Observado: {\"kind\":\"merged\",\"fields\":{\"priority\":2,\"work\":{\"assignedTechnicianId\":\"technician-1\",\"status\":\"assigned\"}}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-08-inicio-vs-reasignacion",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npm run test:week08",
+      "evidence": "El técnico inicia sin conexión y coordinación reasigna: conflicto en work. Esperado: {\"kind\":\"conflict\",\"fields\":[\"work\"]}. Observado: {\"kind\":\"conflict\",\"fields\":[\"work\"]}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-09-solo-inicio-local",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npm run test:week08",
+      "evidence": "Sin cambio remoto en work: se conserva el inicio local. Esperado: {\"kind\":\"merged\",\"fields\":{\"work\":{\"assignedTechnicianId\":\"technician-1\",\"status\":\"in_progress\"}}}. Observado: {\"kind\":\"merged\",\"fields\":{\"work\":{\"assignedTechnicianId\":\"technician-1\",\"status\":\"in_progress\"}}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-10-solo-reasignacion-remota",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "npm run test:week08",
+      "evidence": "Sin cambio local en work: se respeta la reasignación remota. Esperado: {\"kind\":\"merged\",\"fields\":{\"work\":{\"assignedTechnicianId\":\"technician-2\",\"status\":\"assigned\"}}}. Observado: {\"kind\":\"merged\",\"fields\":{\"work\":{\"assignedTechnicianId\":\"technician-2\",\"status\":\"assigned\"}}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-11a-null-agregado",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "Local agrega note con valor null y remoto no cambia: se conserva null. Esperado: {\"kind\":\"merged\",\"fields\":{\"note\":null,\"title\":\"A\"}}. Observado: {\"kind\":\"merged\",\"fields\":{\"note\":null,\"title\":\"A\"}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-11b-propiedad-retirada",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "Local retira note y remoto no cambia: note queda ausente, no null. Esperado: {\"removed\":{\"kind\":\"merged\",\"fields\":{\"title\":\"A\"}},\"removedHasKey\":false}. Observado: {\"removed\":{\"kind\":\"merged\",\"fields\":{\"title\":\"A\"}},\"removedHasKey\":false}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-11c-null-vs-texto",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npm run test:week08",
+      "evidence": "Local agrega null y remoto agrega texto en note: conflicto. Esperado: {\"kind\":\"conflict\",\"fields\":[\"note\"]}. Observado: {\"kind\":\"conflict\",\"fields\":[\"note\"]}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-12a-arreglo-reordenado",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "Local reordena un arreglo y remoto no cambia: se conserva el nuevo orden. Esperado: {\"kind\":\"merged\",\"fields\":{\"tags\":[\"b\",\"a\"]}}. Observado: {\"kind\":\"merged\",\"fields\":{\"tags\":[\"b\",\"a\"]}}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-12b-arreglo-en-conflicto",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npm run test:week08",
+      "evidence": "Local reordena y remoto agrega elemento: conflicto en tags. Esperado: {\"kind\":\"conflict\",\"fields\":[\"tags\"]}. Observado: {\"kind\":\"conflict\",\"fields\":[\"tags\"]}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-13-sin-mutacion",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "Las entradas no cambian al resolver ni al modificar el resultado. Esperado: {\"unchangedAfterResolve\":true,\"isolatedFromInputs\":true}. Observado: {\"unchangedAfterResolve\":true,\"isolatedFromInputs\":true}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-14-identidad-distinta",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npm run test:week08",
+      "evidence": "Un registro de otra incidencia lanza un error controlado. Esperado: \"sync_identity_mismatch\". Observado: \"sync_identity_mismatch\"",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "sy-15-deduplicacion",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "Repetidos consecutivos y separados: se conserva la primera operación en orden. Esperado: {\"result\":[{\"operationId\":\"op-1\",\"value\":1},{\"operationId\":\"op-2\",\"value\":2},{\"operationId\":\"op-3\",\"value\":4}],\"inputUnchanged\":true,\"newArray\":true}. Observado: {\"result\":[{\"operationId\":\"op-1\",\"value\":1},{\"operationId\":\"op-2\",\"value\":2},{\"operationId\":\"op-3\",\"value\":4}],\"inputUnchanged\":true,\"newArray\":true}",
+      "sourceCommand": "npx jest course-tests/team/week-08-sync.test.ts"
+    },
+    {
+      "id": "fatima-reapertura",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "El adaptador real conserva la identidad y aísla usuarios tras cerrar/reabrir SQLite. Ejecutado por Codex mediante tests/unit/sqlite-queue.test.ts y SQLite real en disco."
+    },
+    {
+      "id": "fatima-migracion",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npm run test:week08",
+      "evidence": "La falla se inyecta sólo en pruebas; rollback conserva v1 y datos, recuperación completa v2. Ejecutado por Codex mediante tests/unit/sqlite-queue.test.ts y SQLite real en disco."
+    },
+    {
+      "id": "fatima-idempotencia",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "npm run test:week08",
+      "evidence": "Inserción repetida conserva la primera operación; contenido distinto es rechazado. Ejecutado por Codex mediante tests/unit/sqlite-queue.test.ts y SQLite real en disco."
+    },
+    {
+      "id": "fatima-confirmacion",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "npm run test:week08",
+      "evidence": "Una falla al retirar la cola revierte también caché y archivo. Ejecutado por Codex mediante tests/unit/sqlite-queue.test.ts y SQLite real en disco."
+    },
+    {
+      "id": "android-manual-recuperacion",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "Prueba manual Android de Hector y GET del servidor; ver reports/week-08/android-manual.md",
+      "evidence": "Hector recupero pendiente y nota tras cerrar/reabrir Expo Go y reconectar para acceder."
+    },
+    {
+      "id": "android-manual-reasignacion",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "Prueba manual Android de Hector y GET del servidor; ver reports/week-08/android-manual.md",
+      "evidence": "El start de technician-1 quedo bloqueado y conservado; servidor mantuvo version 2 y technician-2."
+    },
+    {
+      "id": "android-manual-confirmacion",
+      "status": "pass",
+      "scenarioType": "nominal",
+      "command": "Prueba manual Android de Hector y GET del servidor; ver reports/week-08/android-manual.md",
+      "evidence": "Start de technician-2 confirmado en version 3, UUID 7e425552-f525-4526-8486-aba6b8496e2e."
+    },
+    {
+      "id": "android-manual-otra-sincronizacion",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "Prueba manual Android de Hector y GET del servidor; ver reports/week-08/android-manual.md",
+      "evidence": "Otro Sincronizar sin nueva accion mantuvo version 3 y un solo start en historial."
+    }
+  ],
+  "executedBy": "Automaticas: Codex. Android manual: Hector, documentado a partir de sus capturas y salidas.",
+  "limitations": [
+    "Expo Go requirio reconexion para cargar el proyecto y autenticarse.",
+    "No se comparo visualmente el UUID antes y despues del reinicio Android.",
+    "La segunda sincronizacion vacia no acredita reenvio manual del mismo POST. La prueba automatica HTTP cubre esa condicion.",
+    "La nota adjunta es local, no un comentario enviado al servidor."
+  ],
+  "remainingVerification": [
+    "Arranque completamente sin red independiente de Expo CLI: no comprobado."
+  ],
+  "verifiedTree": "ac8989058ffe2c16d223699c8fd258074c4ac42f",
+  "verificationNote": "La integración final incluye historial completo en CI y orden de imports de pruebas; no se modificó la lógica de producción comprobada."
+}

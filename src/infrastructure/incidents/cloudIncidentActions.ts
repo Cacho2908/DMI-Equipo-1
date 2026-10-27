@@ -16,7 +16,7 @@ import {
 
 const DEFAULT_URL = process.env.EXPO_PUBLIC_COURSE_BACKEND_URL ?? 'http://127.0.0.1:4310';
 
-function toSnapshot(
+export function toSnapshot(
   value: Readonly<{ id: string; version: number; status: string; payload: Record<string, unknown> }>,
 ): IncidentSnapshot | null {
   const incident = mapIncidentDtoToDomain(value.id, value.status, value.payload);
