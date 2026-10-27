@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "week": 8,
   "mode": "verify",
-  "commitSha": "bdecfe500d7a1cb684cf095e80d14c8a68618770",
-  "evaluatedAt": "2026-10-26T23:35:04.533296+00:00",
+  "commitSha": "dff7d342e70f1142a4fc524b4d17a94010767cf3",
+  "evaluatedAt": "2026-10-27T04:01:14.705939+00:00",
   "status": "pass",
   "checks": [
     {
@@ -34,12 +34,12 @@
     {
       "id": "toolchain_1",
       "status": "pass",
-      "detail": "npm run typecheck\n> dmi-react-native-starter@1.0.0 typecheck\n> tsc --noEmit\n\n\nnpm notice\nnpm notice New major version of npm available! 10.9.4 -> 12.2.1\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1\nnpm notice To update run: npm install -g npm@12.2.1\nnpm notice"
+      "detail": "npm run typecheck\n> dmi-react-native-starter@1.0.0 typecheck\n> tsc --noEmit"
     },
     {
       "id": "toolchain_2",
       "status": "pass",
-      "detail": "npm run lint\n> dmi-react-native-starter@1.0.0 lint\n> eslint ."
+      "detail": "npm run lint\n> dmi-react-native-starter@1.0.0 lint\n> eslint .\n\n\nC:\\Users\\100199601\\Downloads\\CampusOps-Semana-01\\course-tests\\team\\week-08-ui.test.tsx\n  6:1  warning  Import in body of module; reorder to top  import/first\n  7:1  warning  Import in body of module; reorder to top  import/first\n\nâœ– 2 problems (0 errors, 2 warnings)\n  0 errors and 2 warnings potentially fixable with the `--fix` option."
     },
     {
       "id": "toolchain_3",
@@ -49,12 +49,14 @@
     {
       "id": "toolchain_4",
       "status": "pass",
-      "detail": "npm run test:smoke\n> dmi-react-native-starter@1.0.0 test:smoke\n> jest --no-watchman --cacheDirectory .jest-cache --ci --runInBand course-tests/smoke.test.tsx\n\n\nPASS course-tests/smoke.test.tsx\n  âˆš renders the reproducible baseline and resolves backend state (615 ms)\n\nTest Suites: 1 passed, 1 total\nTests:       1 passed, 1 total\nSnapshots:   0 total\nTime:        3.284 s\nRan all test suites matching /course-tests\\\\smoke.test.tsx/i."
+      "detail": "npm run test:smoke\n> dmi-react-native-starter@1.0.0 test:smoke\n> jest --no-watchman --cacheDirectory .jest-cache --ci --runInBand course-tests/smoke.test.tsx\n\n\nPASS course-tests/smoke.test.tsx\n  âˆš renders the reproducible baseline and resolves backend state (712 ms)\n\nTest Suites: 1 passed, 1 total\nTests:       1 passed, 1 total\nSnapshots:   0 total\nTime:        4.513 s, estimated 12 s\nRan all test suites matching /course-tests\\\\smoke.test.tsx/i."
     },
     {
       "id": "toolchain_5",
       "status": "pass",
       "detail": "npm run backend:self-test\n> dmi-react-native-starter@1.0.0 backend:self-test\n> node course-backend/self-test.mjs\n\nCampusOps backend contracts: roles, reassignment conflict, lost response, idempotency, evidence and geocoding PASS.\nControlled backend self-test passed."
     }
-  ]
+  ],
+  "verifiedTree": "3f4998efeca3dc0e217c6897af119fe59bb02f9d",
+  "verificationNote": "El commit de integración y el commit comprobado 7593018b05bb4e588422e6dc71e4250e9432c93b tienen exactamente el mismo árbol Git; el merge no cambió archivos."
 }

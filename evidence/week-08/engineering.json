@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 8,
-  "commitSha": "bdecfe500d7a1cb684cf095e80d14c8a68618770",
+  "commitSha": "dff7d342e70f1142a4fc524b4d17a94010767cf3",
   "decision": "Persistir antes de enviar; usar UUID estable por intención y cuerpo inmutable, confirmación transaccional, comparación de tres versiones y resolución explícita conservando intención. No forzar cambios tras reasignación.",
   "alternatives": [
     "Cola sólo en memoria y sobrescritura de último escritor: sencilla pero pierde trabajo al reiniciar y puede imponer una asignación obsoleta.",
@@ -15,14 +15,11 @@
   ],
   "verification": [
     {
-      "command": "node --test tools/week08-hector-check.cjs",
-      "result": "13 de 13 pruebas pasaron con SQLite real en disco mediante puente Node y backend HTTP real.",
-      "evidence": "reports/week-08/hector-check.tap"
-    },
-    {
       "command": "npm run test:week08",
-      "result": "13 pruebas de integración Node y 5 pruebas Jest (2 UI, 3 públicas) pasaron.",
-      "evidence": "tools/week08-hector-check.cjs y course-tests/team/week-08-ui.test.tsx; ejecución registrada en esta sesión."
+      "result": "Pasaron 13 pruebas Node y 24 Jest: públicas, UI, 15 pruebas de Janeth y 4 pruebas de persistencia integradas.",
+      "evidence": "reports/week-08/migration-tests.json; logs de integración final. La prueba Android sigue pendiente."
     }
-  ]
+  ],
+  "verifiedTree": "3f4998efeca3dc0e217c6897af119fe59bb02f9d",
+  "verificationNote": "El commit de integración y el commit comprobado 7593018b05bb4e588422e6dc71e4250e9432c93b tienen exactamente el mismo árbol Git; el merge no cambió archivos."
 }

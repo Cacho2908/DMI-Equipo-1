@@ -1,82 +1,82 @@
 TAP version 13
-# (node:28352) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:39992) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: SQLite: pending identity and local note survive close/reopen; actor isolation
 ok 1 - SQLite: pending identity and local note survive close/reopen; actor isolation
   ---
-  duration_ms: 29.4346
+  duration_ms: 36.8952
   type: 'test'
   ...
 # Subtest: SQLite: v1 migration rollback preserves data and schema; retry upgrades intact
 ok 2 - SQLite: v1 migration rollback preserves data and schema; retry upgrades intact
   ---
-  duration_ms: 23.0626
+  duration_ms: 22.3017
   type: 'test'
   ...
 # Subtest: deduplication and merge preserve inputs; nested JSON equality, null/deletion and conflict ordering
 ok 3 - deduplication and merge preserve inputs; nested JSON equality, null/deletion and conflict ordering
   ---
-  duration_ms: 0.6352
+  duration_ms: 0.5953
   type: 'test'
   ...
 # Subtest: save failure never calls the gateway or reports a queued change
 ok 4 - save failure never calls the gateway or reports a queued change
   ---
-  duration_ms: 0.2952
+  duration_ms: 0.2608
   type: 'test'
   ...
 # Subtest: pending identity cannot be overwritten or duplicated for the same incident
 ok 5 - pending identity cannot be overwritten or duplicated for the same incident
   ---
-  duration_ms: 9.4598
+  duration_ms: 9.5575
   type: 'test'
   ...
 # Subtest: unavailable send retains exact identity/body and stops; explicit retry confirms once
 ok 6 - unavailable send retains exact identity/body and stops; explicit retry confirms once
   ---
-  duration_ms: 15.3891
+  duration_ms: 18.2083
   type: 'test'
   ...
 # Subtest: concurrent synchronization shares a single send
 ok 7 - concurrent synchronization shares a single send
   ---
-  duration_ms: 10.7911
+  duration_ms: 10.9348
   type: 'test'
   ...
 # Subtest: logout/relogin of same actor invalidates late response without deleting pending
 ok 8 - logout/relogin of same actor invalidates late response without deleting pending
   ---
-  duration_ms: 9.5813
+  duration_ms: 13.4544
   type: 'test'
   ...
 # Subtest: 409 reassignment preserves local work; explicit resolution archives instead of losing it
 ok 9 - 409 reassignment preserves local work; explicit resolution archives instead of losing it
   ---
-  duration_ms: 16.7641
+  duration_ms: 17.9418
   type: 'test'
   ...
 # Subtest: 403 preserves blocked intention and never requests inaccessible remote data
 ok 10 - 403 preserves blocked intention and never requests inaccessible remote data
   ---
-  duration_ms: 10.2115
+  duration_ms: 12.02
   type: 'test'
   ...
 # Subtest: failed confirmation transaction rolls back cached snapshot and queue removal
 ok 11 - failed confirmation transaction rolls back cached snapshot and queue removal
   ---
-  duration_ms: 16.8282
+  duration_ms: 15.2667
   type: 'test'
   ...
 # Subtest: wrong actor cannot enqueue or synchronize another actor operation
 ok 12 - wrong actor cannot enqueue or synchronize another actor operation
   ---
-  duration_ms: 5.5205
+  duration_ms: 6.8534
   type: 'test'
   ...
 # Subtest: real HTTP backend: lost confirmation replay, valid envelope, single history effect and reassignment 403
 ok 13 - real HTTP backend: lost confirmation replay, valid envelope, single history effect and reassignment 403
   ---
-  duration_ms: 173.0519
+  duration_ms: 228.9112
   type: 'test'
   ...
 1..13
@@ -87,4 +87,4 @@ ok 13 - real HTTP backend: lost confirmation replay, valid envelope, single hist
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 828.59
+# duration_ms 984.7806

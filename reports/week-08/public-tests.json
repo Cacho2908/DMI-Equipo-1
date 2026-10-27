@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "week": 8,
   "mode": "public",
-  "commitSha": "bdecfe500d7a1cb684cf095e80d14c8a68618770",
-  "evaluatedAt": "2026-10-26T23:33:54.744994+00:00",
-  "status": "fail",
+  "commitSha": "dff7d342e70f1142a4fc524b4d17a94010767cf3",
+  "evaluatedAt": "2026-10-27T04:01:42.462512+00:00",
+  "status": "pass",
   "checks": [
     {
       "id": "base_files",
@@ -33,18 +33,23 @@
     },
     {
       "id": "required_evidence",
-      "status": "fail",
-      "detail": "missing/empty=['evidence/week-08/individual.json']"
+      "status": "pass",
+      "detail": "missing/empty=[]"
     },
     {
       "id": "schema:reports/week-08/migration-tests.json",
       "status": "pass",
-      "detail": "7 checks indexed, 6 boundary/failure; report evaluates HEAD"
+      "detail": "29 checks indexed, 23 boundary/failure; report evaluates HEAD"
     },
     {
       "id": "schema:evidence/week-08/engineering.json",
       "status": "pass",
       "detail": "decision evidence is substantive and reproducible; report evaluates HEAD"
+    },
+    {
+      "id": "schema:evidence/week-08/individual.json",
+      "status": "pass",
+      "detail": "three individual evidence records found"
     },
     {
       "id": "toolchain_1",
@@ -54,7 +59,7 @@
     {
       "id": "toolchain_2",
       "status": "pass",
-      "detail": "npm run lint\n> dmi-react-native-starter@1.0.0 lint\n> eslint ."
+      "detail": "npm run lint\n> dmi-react-native-starter@1.0.0 lint\n> eslint .\n\n\nC:\\Users\\100199601\\Downloads\\CampusOps-Semana-01\\course-tests\\team\\week-08-ui.test.tsx\n  6:1  warning  Import in body of module; reorder to top  import/first\n  7:1  warning  Import in body of module; reorder to top  import/first\n\nâœ– 2 problems (0 errors, 2 warnings)\n  0 errors and 2 warnings potentially fixable with the `--fix` option."
     },
     {
       "id": "toolchain_3",
@@ -64,7 +69,9 @@
     {
       "id": "toolchain_4",
       "status": "pass",
-      "detail": "npm test -- --ci --runInBand course-tests/public/week-08.test.ts\n> dmi-react-native-starter@1.0.0 test\n> jest --no-watchman --cacheDirectory .jest-cache --ci --runInBand course-tests/public/week-08.test.ts\n\n\nPASS course-tests/public/week-08.test.ts\n  âˆš CampusOps detects offline start versus remote reassignment without mutating either record (3 ms)\n  âˆš merges independent field changes and reports same-field conflict (1 ms)\n  âˆš deduplicates a replayed operation by stable identity\n\nTest Suites: 1 passed, 1 total\nTests:       3 passed, 3 total\nSnapshots:   0 total\nTime:        1.909 s, estimated 2 s\nRan all test suites matching /course-tests\\\\public\\\\week-08.test.ts/i."
+      "detail": "npm test -- --ci --runInBand course-tests/public/week-08.test.ts\n> dmi-react-native-starter@1.0.0 test\n> jest --no-watchman --cacheDirectory .jest-cache --ci --runInBand course-tests/public/week-08.test.ts\n\n\nPASS course-tests/public/week-08.test.ts\n  âˆš CampusOps detects offline start versus remote reassignment without mutating either record (3 ms)\n  âˆš merges independent field changes and reports same-field conflict\n  âˆš deduplicates a replayed operation by stable identity (1 ms)\n\nTest Suites: 1 passed, 1 total\nTests:       3 passed, 3 total\nSnapshots:   0 total\nTime:        2.216 s\nRan all test suites matching /course-tests\\\\public\\\\week-08.test.ts/i."
     }
-  ]
+  ],
+  "verifiedTree": "3f4998efeca3dc0e217c6897af119fe59bb02f9d",
+  "verificationNote": "El commit de integración y el commit comprobado 7593018b05bb4e588422e6dc71e4250e9432c93b tienen exactamente el mismo árbol Git; el merge no cambió archivos."
 }
