@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "week": 9,
+  "commitSha": "6277d615398b996cabc541d8e18b1d4defe1aaee",
+  "decision": "Reintentar solo fallos transitorios con hasta cuatro intentos, esperas progresivas y Retry-After; POST exige identidad y cuerpo constantes guardados antes del envio. Al agotar el ciclo informar indisponibilidad y conservar pendiente, sin reinicio automatico. Para ubicacion el equipo continuara con texto manual cuando no haya resultado valido; su implementacion y validacion siguen pendientes de Fatima y Janeth.",
+  "alternatives": [
+    "Reintentos ilimitados o con clave nueva: descartados por saturacion y duplicados.",
+    "No repetir nunca: reduce trafico pero no recupera confirmaciones perdidas.",
+    "Reintento acotado con identidad/cuerpo persistidos: seleccionado para escrituras; captura manual para ubicacion no disponible."
+  ],
+  "tradeoff": "Beneficio: recupera una confirmacion perdida sin duplicar efectos y evita ciclos infinitos. Costo: latencia acotada, estado persistente y necesidad de soporte de idempotencia del servidor; superar el presupuesto obliga a informar pendiente. La captura manual y cache aun requieren integracion de las otras ramas.",
+  "requirementIds": [
+    "AC-01",
+    "AC-02",
+    "AC-03",
+    "AC-04",
+    "AC-05"
+  ],
+  "verification": [
+    {
+      "command": "node --test tools/week09-hector-check.cjs",
+      "result": "pass",
+      "evidence": "6 pruebas del host: politica, Retry-After, agotamiento, cancelacion, timeout_after_commit HTTP real con SQLite y fallos HTTP. No es una prueba Android."
+    },
+    {
+      "command": "node --test tools/week08-hector-check.cjs",
+      "result": "pass",
+      "evidence": "13 pruebas previas de persistencia, cola, sesion y backend pasaron."
+    },
+    {
+      "command": "npx jest --runInBand course-tests/public/week-09.test.ts",
+      "result": "fail",
+      "evidence": "Los 3 casos de retry pasan; falta selector de ubicacion de Janeth. La tarea completa no esta aprobada."
+    },
+    {
+      "command": "make feedback PYTHON=python",
+      "result": "pass",
+      "evidence": "Typecheck, lint, smoke, audit al umbral critical y exportacion Android Expo pasaron. Audit reporto 26 vulnerabilidades (1 low, 17 moderate, 8 high), ninguna critical; no se bajo el umbral ni se cambio Expo. Exportacion Metro de 645 modulos, no equivale a APK ni prueba Android."
+    }
+  ]
+}
