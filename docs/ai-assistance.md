@@ -21,3 +21,6 @@ Codex diseñó e implementó coordinador de sincronización, gateway HTTP, inter
 
 ## Revisión e integración final de semana 8
 Codex integró los commits de Fátima y Janeth con los de Héctor, revisó las pruebas de Janeth y corrigió la migración siempre fallida del primer adaptador de Fátima. Unificó ambas bases y sustituyó pruebas de igualdad de fixtures por pruebas ejecutables de persistencia. Las corridas finales las ejecutó Codex, sin atribuirlas como ejecuciones personales a las estudiantes. El emulador no arrancó por falta de aceleración de hardware; el usuario confirmó que el equipo aún no realizó la prueba Android.
+
+## Semana 9 — parte de Héctor asistida por Codex
+Por solicitud de Héctor, Codex revisó los documentos instalados, propuso el reparto, implementó política/ejecutor de reintentos y su integración HTTP/cola, y redactó pruebas y documentación. Las ejecuciones automáticas del host se identifican como tales. Fátima y Janeth deben implementar y registrar sus propias partes; no se les atribuyen cambios ni resultados por adelantado. Héctor debe revisar y comprender el código y verificar el flujo antes de declararlo como revisión o prueba humana. No se modificaron las pruebas públicas para forzar éxito.
