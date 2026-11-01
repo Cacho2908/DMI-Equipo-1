@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "week": 9,
+  "commitSha": "6277d615398b996cabc541d8e18b1d4defe1aaee",
+  "generatedAt": "2026-11-01T15:15:35.927Z",
+  "checks": [
+    {
+      "id": "retry-policy",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Only transient statuses retry; waits 400/800/1600 ms; attempt 4 stops; POST without stable identity does not repeat."
+    },
+    {
+      "id": "retry-after-bounds",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Seconds and HTTP-date parsed; 800 ms respected; 60 s exceeds 30 s budget and stops rather than retrying early; nonfinite inputs cannot create infinite delays."
+    },
+    {
+      "id": "retry-exhaustion",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Persistent 503: 4 calls, then terminal failure; real waits 10/20/40 ms, technical fields only."
+    },
+    {
+      "id": "retry-cancellation",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "No-key POST sends once; cancellation during wait prevents second request; a broken metrics callback does not change delivery."
+    },
+    {
+      "id": "lost-resolution-response",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Unmodified backend saved resolve before actual HTTP abort at 200 ms. Exact key/body replay returned success; SQLite queue cleared; version 4, one resolve event and one existing evidence reference. Empty queue sync made no change. No notification subsystem exists: no notification delivery is claimed."
+    },
+    {
+      "id": "http-faults",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Real controlled 429 waited at least 1000 ms before attempt 2 and stopped at configured limit; malformed JSON was not retried; disconnected endpoint stopped after 2 attempts; unauthorized role 403 sent once."
+    }
+  ],
+  "metrics": [
+    {
+      "scenario": "persistent-503",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": 503,
+          "startedAtMs": 1793546133589,
+          "durationMs": 1,
+          "delayMs": 10,
+          "retry": true
+        },
+        {
+          "attempt": 2,
+          "status": 503,
+          "startedAtMs": 1793546133601,
+          "durationMs": 0,
+          "delayMs": 20,
+          "retry": true
+        },
+        {
+          "attempt": 3,
+          "status": 503,
+          "startedAtMs": 1793546133622,
+          "durationMs": 0,
+          "delayMs": 40,
+          "retry": true
+        },
+        {
+          "attempt": 4,
+          "status": 503,
+          "startedAtMs": 1793546133669,
+          "durationMs": 1,
+          "delayMs": 0,
+          "retry": false
+        }
+      ]
+    },
+    {
+      "scenario": "timeout-after-commit-resolution",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "timeout",
+          "startedAtMs": 1793546134073,
+          "durationMs": 207,
+          "delayMs": 400,
+          "retry": true
+        },
+        {
+          "attempt": 2,
+          "status": 200,
+          "startedAtMs": 1793546134689,
+          "durationMs": 4,
+          "delayMs": 0,
+          "retry": false
+        }
+      ],
+      "sends": 2,
+      "sameKeyAndBody": true,
+      "resolutionEvents": 1,
+      "evidenceReferences": 1,
+      "finalVersion": 4
+    },
+    {
+      "scenario": "rate-limited",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": 429,
+          "startedAtMs": 1793546134868,
+          "durationMs": 10,
+          "delayMs": 1000,
+          "retry": true
+        },
+        {
+          "attempt": 2,
+          "status": 429,
+          "startedAtMs": 1793546135886,
+          "durationMs": 3,
+          "delayMs": 0,
+          "retry": false
+        },
+        {
+          "attempt": 1,
+          "status": 422,
+          "startedAtMs": 1793546135889,
+          "durationMs": 5,
+          "delayMs": 0,
+          "retry": false
+        }
+      ]
+    },
+    {
+      "scenario": "disconnected",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "timeout",
+          "startedAtMs": 1793546135894,
+          "durationMs": 0,
+          "delayMs": 10,
+          "retry": true
+        },
+        {
+          "attempt": 2,
+          "status": "timeout",
+          "startedAtMs": 1793546135918,
+          "durationMs": 1,
+          "delayMs": 0,
+          "retry": false
+        }
+      ]
+    }
+  ],
+  "environment": "Node host, real SQLite and HTTP; not an Android run"
+}

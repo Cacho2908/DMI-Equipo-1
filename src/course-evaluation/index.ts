@@ -87,15 +87,7 @@ export function coordinateRefresh(events: readonly AuthEvent[]): Readonly<{
 
 export { resolveSync, deduplicateOperations } from '../domain/sync/resolveSync';
 
-export function planRetry(_input: Readonly<{
-  method: 'GET' | 'POST';
-  status: number | 'timeout';
-  attempt: number;
-  retryAfterMs?: number;
-  idempotencyKey?: string;
-}>): Readonly<{ retry: boolean; delayMs: number; requiresStableIdempotencyKey: boolean }> {
-  return pending('planRetry');
-}
+export { planRetry } from '../domain/resilience/retryPolicy';
 
 export function reduceRemoteResponses(_input: Readonly<{
   activeRequestId: string;

@@ -1,3 +1,4 @@
+import type { RetryOptions } from '../http/retryExecutor';
 import type { SyncGateway, SendResult } from '../../application/sync/offlineSync';
 import type { PendingOperation } from '../../domain/offline';
 import type { SessionManager } from '../../application/session/sessionManager';
@@ -5,15 +6,19 @@ import { fetchJson } from './cloudIncidentClient';
 import { toSnapshot } from './cloudIncidentActions';
 import { parseRemoteResource } from '../../course-evaluation';
 const DEFAULT_URL = process.env.EXPO_PUBLIC_COURSE_BACKEND_URL ?? 'http://127.0.0.1:4310';
-export function createOfflineSyncGateway(actorId: string, session: SessionManager, baseUrl = DEFAULT_URL): SyncGateway {
+export function createOfflineSyncGateway(actorId: string, session: SessionManager, baseUrl = DEFAULT_URL, retryOptions: RetryOptions = {}): SyncGateway {
   return {
     async send(operation: PendingOperation): Promise<SendResult> {
       const active = session.getState();
       if ((active.status !== 'authenticated' && active.status !== 'refreshing') || active.actorId !== actorId || operation.actorId !== actorId) return { kind: 'forbidden' };
+      const revision = session.getSessionRevision();
       const result = await fetchJson(`/v1/incidents/${encodeURIComponent(operation.incidentId)}/actions`, actorId, baseUrl, session, {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': operation.operationId },
         body: JSON.stringify({ ...operation.request, baseVersion: operation.baseVersion }),
-      });
+      }, { ...retryOptions, shouldContinue: () => {
+        const state = session.getState();
+        return session.getSessionRevision() === revision && (state.status === 'authenticated' || state.status === 'refreshing') && state.actorId === actorId && (retryOptions.shouldContinue?.() ?? true);
+      } });
       if (!result.ok) {
         if (result.error.kind === 'unauthorized') return { kind: 'unauthorized' };
         if (result.error.kind === 'server_error') {

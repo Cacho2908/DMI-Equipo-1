@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "week": 9,
+  "commitSha": "6277d615398b996cabc541d8e18b1d4defe1aaee",
+  "generatedAt": "2026-11-01T15:15:35.927Z",
+  "checks": [
+    {
+      "id": "retry-policy",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Only transient statuses retry; waits 400/800/1600 ms; attempt 4 stops; POST without stable identity does not repeat."
+    },
+    {
+      "id": "retry-after-bounds",
+      "status": "pass",
+      "scenarioType": "boundary",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Seconds and HTTP-date parsed; 800 ms respected; 60 s exceeds 30 s budget and stops rather than retrying early; nonfinite inputs cannot create infinite delays."
+    },
+    {
+      "id": "retry-exhaustion",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Persistent 503: 4 calls, then terminal failure; real waits 10/20/40 ms, technical fields only."
+    },
+    {
+      "id": "retry-cancellation",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "No-key POST sends once; cancellation during wait prevents second request; a broken metrics callback does not change delivery."
+    },
+    {
+      "id": "lost-resolution-response",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Unmodified backend saved resolve before actual HTTP abort at 200 ms. Exact key/body replay returned success; SQLite queue cleared; version 4, one resolve event and one existing evidence reference. Empty queue sync made no change. No notification subsystem exists: no notification delivery is claimed."
+    },
+    {
+      "id": "http-faults",
+      "status": "pass",
+      "scenarioType": "failure",
+      "command": "node --test tools/week09-hector-check.cjs",
+      "evidence": "Real controlled 429 waited at least 1000 ms before attempt 2 and stopped at configured limit; malformed JSON was not retried; disconnected endpoint stopped after 2 attempts; unauthorized role 403 sent once."
+    },
+    {
+      "id": "location-integration-pending",
+      "status": "fail",
+      "scenarioType": "failure",
+      "command": "node node_modules/jest/bin/jest.js --no-watchman --cacheDirectory .jest-cache --ci --runInBand course-tests/public/week-09.test.ts",
+      "evidence": "La corrida conjunta obtuvo 28 pass y 1 fail: selectIncidentLocation aun lanza must be implemented. Los otros tres tests publicos de retry pasaron. No se desactivo la prueba."
+    }
+  ],
+  "scope": "Parte de Hector ejecutada por Codex. Integracion de ubicacion y UI pendiente de Fatima y Janeth; no es entrega final."
+}
