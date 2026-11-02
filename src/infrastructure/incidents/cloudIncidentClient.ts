@@ -1,3 +1,5 @@
+import { parseRetryAfter } from '../../domain/resilience/retryPolicy';
+import { executeWithRetry, type RetryOptions } from '../http/retryExecutor';
 import { SessionError, SessionManager } from '../../application/session/sessionManager';
 import { parseRemoteResource } from '../../course-evaluation';
 import type { Incident } from '../../domain/incident';
@@ -51,15 +53,18 @@ async function attempt(
   baseUrl: string,
   authorization: string,
   init?: RequestInit,
+  timeoutMs = REQUEST_TIMEOUT_MS,
 ): Promise<Response> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(`${baseUrl}${path}`, {
+    const response = await fetch(`${baseUrl}${path}`, {
       ...init,
       headers: { Authorization: authorization, 'X-Course-Actor': actorId, ...(init?.headers ?? {}) },
       signal: controller.signal,
     });
+    const text = await response.text();
+    return { ok: response.ok, status: response.status, headers: response.headers, json: async () => JSON.parse(text) } as Response;
   } finally {
     clearTimeout(timer);
   }
@@ -71,33 +76,33 @@ export async function fetchJson(
   baseUrl: string,
   session: SessionManager | undefined,
   init?: RequestInit,
+  options?: RetryOptions,
 ): Promise<CloudResult<unknown>> {
-  let response: Response;
-  try {
-    // Con sesion: el SessionManager pone el token vigente, renueva una sola vez ante un 401
-    // y reintenta una sola vez. Sin sesion: comportamiento de la Semana 5.
-    response =
-      session !== undefined
-        ? await session.execute((token) => attempt(path, actorId, baseUrl, `Bearer ${token}`, init))
-        : await attempt(path, actorId, baseUrl, AUTH_HEADER, init);
-  } catch (err) {
-    if (err instanceof SessionError) {
-      return { ok: false, error: { kind: 'unauthorized' } };
+  const timeoutMs = options?.timeoutMs ?? REQUEST_TIMEOUT_MS;
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 2147483647) throw new Error('invalid_timeout');
+  // Snapshot the exact body and key once, across transport and session retries.
+  const headers = new Headers(init?.headers);
+  const stableInit = { ...init, headers: Object.fromEntries(headers.entries()) };
+  const method = init?.method?.toUpperCase() === 'POST' ? 'POST' : 'GET';
+  const once = async (): Promise<{ status: number | 'timeout'; value: CloudResult<unknown>; retryAfterMs?: number | undefined }> => {
+    let response: Response;
+    try {
+      response = session !== undefined
+        ? await session.execute(token => attempt(path, actorId, baseUrl, `Bearer ${token}`, stableInit, timeoutMs))
+        : await attempt(path, actorId, baseUrl, AUTH_HEADER, stableInit, timeoutMs);
+    } catch (err) {
+      if (err instanceof SessionError) return { status: 401, value: { ok: false, error: { kind: 'unauthorized' } } };
+      return { status: 'timeout', value: { ok: false, error: { kind: err instanceof Error && err.name === 'AbortError' ? 'timeout' : 'network_error' } } };
     }
-    if (err instanceof Error && err.name === 'AbortError') {
-      return { ok: false, error: { kind: 'timeout' } };
-    }
-    return { ok: false, error: { kind: 'network_error' } };
-  }
-
-  if (!response.ok) {
-    return { ok: false, error: { kind: 'server_error', status: response.status } };
-  }
-
-  try {
-    return { ok: true, value: await response.json() };
-  } catch {
-    return { ok: false, error: { kind: 'invalid_payload' } };
+    if (!response.ok) return { status: response.status, retryAfterMs: parseRetryAfter(response.headers.get('retry-after')), value: { ok: false, error: { kind: 'server_error', status: response.status } } };
+    try { return { status: response.status, value: { ok: true, value: await response.json() } }; }
+    catch { return { status: 422, value: { ok: false, error: { kind: 'invalid_payload' } } }; }
+  };
+  if (!options) return (await once()).value;
+  try { return await executeWithRetry({ method, idempotencyKey: headers.get('idempotency-key') ?? undefined }, once, options); }
+  catch (error) {
+    if (error instanceof Error && error.message === 'retry_cancelled') return { ok: false, error: { kind: 'unauthorized' } };
+    throw error;
   }
 }
 

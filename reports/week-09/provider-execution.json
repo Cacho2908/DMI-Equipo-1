@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-02T04:40:22.629Z",
+  "provider": "Photon (https://photon.komoot.io/api/)",
+  "command": "fetch('https://photon.komoot.io/api/?q=CampusOps%2010A%20E01&limit=1')",
+  "httpStatus": 200,
+  "durationMs": 1489,
+  "sanitizedResult": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "osm_type": "N",
+          "osm_id": 9982743294,
+          "osm_key": "highway",
+          "osm_value": "bus_stop",
+          "type": "house",
+          "name": "Terminal Guadalupe (E01)",
+          "street": "Praça Senador Correia",
+          "district": "Centro",
+          "city": "Curitiba",
+          "state": "Paraná",
+          "country": "Brasil",
+          "postcode": "80060-100",
+          "countrycode": "BR"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -49.2648371,
+            -25.4327603
+          ]
+        }
+      }
+    ]
+  }
+}
