@@ -6,13 +6,21 @@
     {
       "studentId": "3523110714 Fatima Avelino Celis",
       "commitShas": [],
-      "files": [],
-      "tests": [],
+      "files": [
+        "src/infrastructure/location/sqliteLocationCache.ts",
+        "src/application/location/locationService.ts",
+        "course-tests/team/week-09-location.test.ts",
+        "docs/week-09-provider.md",
+        "reports/week-09/provider-execution.json"
+      ],
+      "tests": [
+        "npx jest --runInBand course-tests/team/week-09-location.test.ts"
+      ],
       "reviews": [],
-      "prediction": "Pendiente de completar por la integrante al implementar su rama.",
-      "command": "Pendiente de ejecucion por la integrante.",
-      "observedResult": "Pendiente; no hay resultados ni commits de semana 9 atribuidos a esta integrante.",
-      "explanation": "Registro reservado en el unico individual.json del equipo; agregar solo aportacion real verificable antes de entregar."
+      "prediction": "El adaptador guardará los resultados válidos en SQLite y devolverá la etiqueta manual segura en caso de error de red, timeout o límite excedido (429).",
+      "command": "npx jest --runInBand course-tests/team/week-09-location.test.ts",
+      "observedResult": "Las 5 pruebas pasaron exitosamente. La consulta externa de validación se ejecutó y documentó correctamente.",
+      "explanation": "Implementé el caché local en SQLite con TTL de 24 horas y límite de 50 registros. Desarrollé el adaptador para Photon integrando la política de reintentos del equipo, deduplicación de consultas y soporte completo para fallos de red (fallback a manual)."
     },
     {
       "studentId": "3523110081 Janeth Cabrera Arguelles",
