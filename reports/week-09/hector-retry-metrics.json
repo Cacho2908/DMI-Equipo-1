@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "week": 9,
-  "commitSha": "6277d615398b996cabc541d8e18b1d4defe1aaee",
-  "generatedAt": "2026-11-01T15:15:35.927Z",
+  "commitSha": "aa08f5117700b09987c19729636468a7abe2a226",
+  "generatedAt": "2026-11-03T03:30:57.092Z",
   "checks": [
     {
       "id": "retry-policy",
@@ -54,15 +54,15 @@
         {
           "attempt": 1,
           "status": 503,
-          "startedAtMs": 1793546133589,
-          "durationMs": 1,
+          "startedAtMs": 1793676655000,
+          "durationMs": 0,
           "delayMs": 10,
           "retry": true
         },
         {
           "attempt": 2,
           "status": 503,
-          "startedAtMs": 1793546133601,
+          "startedAtMs": 1793676655011,
           "durationMs": 0,
           "delayMs": 20,
           "retry": true
@@ -70,7 +70,7 @@
         {
           "attempt": 3,
           "status": 503,
-          "startedAtMs": 1793546133622,
+          "startedAtMs": 1793676655035,
           "durationMs": 0,
           "delayMs": 40,
           "retry": true
@@ -78,8 +78,8 @@
         {
           "attempt": 4,
           "status": 503,
-          "startedAtMs": 1793546133669,
-          "durationMs": 1,
+          "startedAtMs": 1793676655080,
+          "durationMs": 0,
           "delayMs": 0,
           "retry": false
         }
@@ -91,16 +91,16 @@
         {
           "attempt": 1,
           "status": "timeout",
-          "startedAtMs": 1793546134073,
-          "durationMs": 207,
+          "startedAtMs": 1793676655280,
+          "durationMs": 212,
           "delayMs": 400,
           "retry": true
         },
         {
           "attempt": 2,
           "status": 200,
-          "startedAtMs": 1793546134689,
-          "durationMs": 4,
+          "startedAtMs": 1793676655903,
+          "durationMs": 3,
           "delayMs": 0,
           "retry": false
         }
@@ -117,15 +117,15 @@
         {
           "attempt": 1,
           "status": 429,
-          "startedAtMs": 1793546134868,
-          "durationMs": 10,
+          "startedAtMs": 1793676656039,
+          "durationMs": 8,
           "delayMs": 1000,
           "retry": true
         },
         {
           "attempt": 2,
           "status": 429,
-          "startedAtMs": 1793546135886,
+          "startedAtMs": 1793676657055,
           "durationMs": 3,
           "delayMs": 0,
           "retry": false
@@ -133,8 +133,8 @@
         {
           "attempt": 1,
           "status": 422,
-          "startedAtMs": 1793546135889,
-          "durationMs": 5,
+          "startedAtMs": 1793676657058,
+          "durationMs": 3,
           "delayMs": 0,
           "retry": false
         }
@@ -146,15 +146,15 @@
         {
           "attempt": 1,
           "status": "timeout",
-          "startedAtMs": 1793546135894,
-          "durationMs": 0,
+          "startedAtMs": 1793676657061,
+          "durationMs": 1,
           "delayMs": 10,
           "retry": true
         },
         {
           "attempt": 2,
           "status": "timeout",
-          "startedAtMs": 1793546135918,
+          "startedAtMs": 1793676657086,
           "durationMs": 1,
           "delayMs": 0,
           "retry": false

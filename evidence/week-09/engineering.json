@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "week": 9,
-  "commitSha": "6277d615398b996cabc541d8e18b1d4defe1aaee",
-  "decision": "Reintentar solo fallos transitorios con hasta cuatro intentos, esperas progresivas y Retry-After; POST exige identidad y cuerpo constantes guardados antes del envio. Al agotar el ciclo informar indisponibilidad y conservar pendiente, sin reinicio automatico. Para ubicacion el equipo continuara con texto manual cuando no haya resultado valido; su implementacion y validacion siguen pendientes de Fatima y Janeth.",
+  "commitSha": "aa08f5117700b09987c19729636468a7abe2a226",
+  "decision": "Reintentar fallos transitorios con hasta cuatro intentos y respetar Retry-After. Toda escritura usa identidad y contenido estables. Al agotarse el ciclo se informa indisponibilidad y se conserva la operación pendiente. Para ubicación se acepta Photon validado y cacheado, con captura manual si proveedor falla, limita, expira o devuelve datos inválidos. No se inventan coordenadas.",
   "alternatives": [
     "Reintentos ilimitados o con clave nueva: descartados por saturacion y duplicados.",
     "No repetir nunca: reduce trafico pero no recupera confirmaciones perdidas.",
     "Reintento acotado con identidad/cuerpo persistidos: seleccionado para escrituras; captura manual para ubicacion no disponible."
   ],
-  "tradeoff": "Beneficio: recupera una confirmacion perdida sin duplicar efectos y evita ciclos infinitos. Costo: latencia acotada, estado persistente y necesidad de soporte de idempotencia del servidor; superar el presupuesto obliga a informar pendiente. La captura manual y cache aun requieren integracion de las otras ramas.",
+  "tradeoff": "Los reintentos acotados recuperan confirmaciones perdidas sin duplicar efectos, a cambio de latencia y requerir idempotencia y estado local. El proveedor geográfico añade caché y atribución, a cambio de posible imprecisión o indisponibilidad. La etiqueta manual permite continuar con edificio, zona o referencia.",
   "requirementIds": [
     "AC-01",
     "AC-02",
@@ -18,24 +18,29 @@
   ],
   "verification": [
     {
+      "command": "make feedback",
+      "result": "pass",
+      "evidence": "Typecheck, lint (un warning de variable no usada), smoke, audit nivel crítico y Expo Android export pasaron. Audit halló 26 vulnerabilidades, ninguna crítica."
+    },
+    {
+      "command": "make verify-week-09 PYTHON=python",
+      "result": "pass",
+      "evidence": "Evaluator week 09 verification pasó con el código integrado."
+    },
+    {
+      "command": "make public-test-week-09 PYTHON=python",
+      "result": "pass",
+      "evidence": "4 pruebas públicas pasaron después de integrar selector y reintentos."
+    },
+    {
+      "command": "npx jest --runInBand --testTimeout=30000 week-09 week-08-ui",
+      "result": "pass",
+      "evidence": "30 pruebas de ubicación/UI semana 9 y regresión semana 8 pasaron."
+    },
+    {
       "command": "node --test tools/week09-hector-check.cjs",
       "result": "pass",
-      "evidence": "6 pruebas del host: politica, Retry-After, agotamiento, cancelacion, timeout_after_commit HTTP real con SQLite y fallos HTTP. No es una prueba Android."
-    },
-    {
-      "command": "node --test tools/week08-hector-check.cjs",
-      "result": "pass",
-      "evidence": "13 pruebas previas de persistencia, cola, sesion y backend pasaron."
-    },
-    {
-      "command": "npx jest --runInBand course-tests/public/week-09.test.ts",
-      "result": "fail",
-      "evidence": "Los 3 casos de retry pasan; falta selector de ubicacion de Janeth. La tarea completa no esta aprobada."
-    },
-    {
-      "command": "make feedback PYTHON=python",
-      "result": "pass",
-      "evidence": "Typecheck, lint, smoke, audit al umbral critical y exportacion Android Expo pasaron. Audit reporto 26 vulnerabilidades (1 low, 17 moderate, 8 high), ninguna critical; no se bajo el umbral ni se cambio Expo. Exportacion Metro de 645 modulos, no equivale a APK ni prueba Android."
+      "evidence": "6 pruebas con HTTP y SQLite reales, incluye Retry-After, timeout después de commit y replay idempotente."
     }
   ]
 }
