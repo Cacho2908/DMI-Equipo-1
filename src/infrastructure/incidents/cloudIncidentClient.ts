@@ -155,18 +155,17 @@ export function createCloudIncidentClient(actorId: string, baseUrl = DEFAULT_URL
       return { ok: true, value: incidents };
     },
 
-    async createIncident(input: Readonly<{
-      category: string;
-      description: string;
-      location: string;
-    }>): Promise<CloudResult<Incident>> {
-      // La misma llave de idempotencia se reutiliza si la solicitud se reintenta tras renovar la sesión.
-      const idempotencyKey = `create-${actorId}-${Date.now()}`;
+    async createIncident(
+      input: Readonly<{ category: string; description: string; location: string }>,
+      options?: Readonly<{ operationId?: string; retry?: RetryOptions }>,
+    ): Promise<CloudResult<Incident>> {
+      // Con operationId estable, un reenvío conserva la misma clave y el mismo cuerpo.
+      const idempotencyKey = options?.operationId ?? `create-${actorId}-${Date.now()}`;
       const result = await fetchJson('/v1/incidents', actorId, baseUrl, session, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey },
         body: JSON.stringify(input),
-      });
+      }, options?.retry);
       if (!result.ok) return result;
 
       const envelope = result.value as { incident?: unknown };
