@@ -5,7 +5,7 @@
   "members": [
     {
       "studentId": "3523110714 Fatima Avelino Celis",
-      "commitShas": [],
+      "commitShas": ["4f8df6fb1d7ed6b8be1033ea7bc2f0d0fb67f30f"],
       "files": [
         "src/infrastructure/location/sqliteLocationCache.ts",
         "src/application/location/locationService.ts",
@@ -22,16 +22,30 @@
       "observedResult": "Las 5 pruebas pasaron exitosamente. La consulta externa de validación se ejecutó y documentó correctamente.",
       "explanation": "Implementé el caché local en SQLite con TTL de 24 horas y límite de 50 registros. Desarrollé el adaptador para Photon integrando la política de reintentos del equipo, deduplicación de consultas y soporte completo para fallos de red (fallback a manual)."
     },
-    {
+{
       "studentId": "3523110081 Janeth Cabrera Arguelles",
-      "commitShas": [],
-      "files": [],
-      "tests": [],
+      "commitShas": [
+        "37a136a9926ae76c12c5b24df41cb17ebdbefb3d",
+        "79d462921cdf6ab2350248eb9c03dfdd37d78e74"
+      ],
+      "files": [
+        "src/domain/location/selectIncidentLocation.ts",
+        "src/infrastructure/incidents/cloudIncidentClient.ts",
+        "src/ui/components/IncidentLocationPicker.tsx",
+        "src/ui/components/IncidentReportForm.tsx",
+        "App.tsx",
+        "course-tests/team/week-09-location-ui.test.tsx"
+      ],
+      "tests": [
+        "npm run typecheck",
+        "npx jest course-tests/team/week-09-location-ui.test.tsx --verbose",
+        "npm run test:smoke"
+      ],
       "reviews": [],
-      "prediction": "Pendiente de completar por la integrante al implementar su rama.",
-      "command": "Pendiente de ejecucion por la integrante.",
-      "observedResult": "Pendiente; no hay resultados ni commits de semana 9 atribuidos a esta integrante.",
-      "explanation": "Registro reservado en el unico individual.json del equipo; agregar solo aportacion real verificable antes de entregar."
+      "prediction": "El formulario de reporte permitirá buscar ubicaciones con fallback manual e integrará reintentos con clave idempotente estable ante fallos de red.",
+      "command": "npx jest course-tests/team/week-09-location-ui.test.tsx --verbose",
+      "observedResult": "Las 9 pruebas de UI pasaron exitosamente. Typecheck y smoke test pasaron en limpio sin errores.",
+      "explanation": "Desarrollé la lógica del selector de ubicación en el dominio, implementé IncidentReportForm e IncidentLocationPicker con fallback a texto manual, integré la creación idempotente en App.tsx y creé la suite de pruebas UI de semana 9."
     },
     {
       "studentId": "3523110487 Hector Ulises Cacho Gonzalez",
