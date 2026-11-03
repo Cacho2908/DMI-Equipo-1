@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "week": 9,
-  "commitSha": "aa08f5117700b09987c19729636468a7abe2a226",
+  "commitSha": "372cfec3ad414e08fb3abbafbc5c1fd6894c8096",
   "decision": "Reintentar fallos transitorios con hasta cuatro intentos y respetar Retry-After. Toda escritura usa identidad y contenido estables. Al agotarse el ciclo se informa indisponibilidad y se conserva la operación pendiente. Para ubicación se acepta Photon validado y cacheado, con captura manual si proveedor falla, limita, expira o devuelve datos inválidos. No se inventan coordenadas.",
   "alternatives": [
     "Reintentos ilimitados o con clave nueva: descartados por saturacion y duplicados.",
