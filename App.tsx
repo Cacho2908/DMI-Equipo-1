@@ -19,6 +19,9 @@ import { IncidentActionBar } from './src/ui/screens/IncidentActionBar';
 import { IncidentDetailScreen } from './src/ui/screens/IncidentDetailScreen';
 import { IncidentListScreen } from './src/ui/screens/IncidentListScreen';
 import { LoginScreen, type LoginActor } from './src/ui/screens/LoginScreen';
+import { createLocationService } from './src/application/location/locationService';
+import type { RetryOptions } from './src/infrastructure/http/retryExecutor';
+import { IncidentReportForm, type CreateIncident } from './src/ui/components/IncidentReportForm';
 
 const ACTORS: readonly LoginActor[] = [
   { id: 'reporter-1', label: 'Reportante (reporter-1)' },
@@ -26,6 +29,9 @@ const ACTORS: readonly LoginActor[] = [
   { id: 'technician-2', label: 'Técnico (technician-2)' },
   { id: 'coordinator-1', label: 'Coordinación (coordinator-1)' },
 ];
+
+// Máximo permitido por el curso: 4 intentos. Se usan 3 para llegar pronto a un mensaje claro.
+const CREATE_RETRY: RetryOptions = { limits: { maxAttempts: 3, baseDelayMs: 500, maxDelayMs: 5000 } };
 
 export default function App() {
   const manager = useMemo(() => new SessionManager({ gateway: createHttpAuthGateway(), store: createSecureTokenStore() }), []);
@@ -96,6 +102,19 @@ export default function App() {
   const cached = incidents.find(item => item.id === detailId) ?? null;
   const snapshot = operation?.status === 'pending' ? operation.local : cached;
   const role = session.status === 'authenticated' || session.status === 'refreshing' ? session.role : null;
+  const locationService = useMemo(() => (role === 'reporter' ? createLocationService() : null), [role]);
+
+const createReport = useMemo<CreateIncident | null>(
+  () =>
+    actorId === null
+      ? null
+      : (input, options) =>
+          createCloudIncidentClient(actorId, undefined, manager).createIncident(input, {
+            operationId: options.operationId,
+            retry: CREATE_RETRY,
+          }),
+  [actorId, manager],
+);
   const buttons = snapshot && actorId && role && !operation ? availableActions(canPerformAction, { actorId, role }, snapshot) : [];
   async function enqueue(request: OfflineRequest) {
     if (!sync || !snapshot || !actorId) return;
@@ -173,6 +192,15 @@ export default function App() {
           {op.lastErrorCode ? <Text>{op.lastErrorCode === 'forbidden' ? 'El servidor rechazó el permiso. La intención local sigue guardada.' : 'La operación requiere revisión o un nuevo intento.'} {op.conflictFields.join(', ')}</Text> : null}
           {op.status !== 'pending' ? <Pressable disabled={busy} onPress={() => archive(op)}><Text>Resolver: aceptar no aplicar y conservar en archivo</Text></Pressable> : null}
         </View>)}
+                {role === 'reporter' && detailId === null && actorId !== null && locationService !== null && createReport !== null ? (
+          <IncidentReportForm
+            key={`${actorId}-${manager.getSessionRevision()}`}
+            search={locationService}
+            create={createReport}
+            newId={randomUUID}
+          />
+        ) : null}
+        
         {detailId !== null ? <View>
           <Pressable onPress={() => { setDetailId(null); setNote(''); setEvidenceId(''); }} testID="back-button"><Text>Volver</Text></Pressable>
           <IncidentDetailScreen incident={snapshot} />
